@@ -8,7 +8,7 @@ const Header = () => {
 			<div className={`container ${styles.headerContainer}`}>
 				<LogoTodo />
 				<nav className="navigation">
-					<Button type="outline">ToDo List</Button>
+					<Button view="outline">ToDo List</Button>
 				</nav>
 				<Button color="orange">Sign In</Button>
 			</div>

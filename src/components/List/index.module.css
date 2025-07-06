@@ -1,16 +1,19 @@
 .list{
     margin: 10px 0;
     width: 100%;
-    height: 100%;
+    height: 90%;
+    overflow-y: auto;
+    max-width: 1000px;
 }
 
 .listWrapper{
     position: relative;
     display: flex;
     flex-direction: column;
-    row-gap: 10px;
+    row-gap: 20px;
     width: 100%;
     height: 100%;
+    padding: 5px;
 }
 
 .message{
@@ -20,4 +23,56 @@
     transform: translate(-50%,-50%);
     font-size: 48px;
     color: var(--orange-color);
+}
+
+.list::-webkit-scrollbar {
+    width: 0.2em;
+}
+
+.list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0 transparent;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: var(--white-color);
+  outline: none;
+  border-radius: 5px;
+}
+
+.data{
+    display: flex;
+    flex-direction: column;
+}
+
+.data input{
+    background-color: transparent;
+    border: none;
+    color: var(--white-color);
+    cursor: pointer;
+}
+
+.actions{
+    display: flex;
+    column-gap: 10px;
+}
+
+.title{
+    font-weight: bold;
+}
+
+.listElement{
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.listElement:hover{
+    scale: 0.95;
+}
+
+.listElementWrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: var(--purple-color);
 }

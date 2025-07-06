@@ -27,4 +27,5 @@
 
     /* pages variables */
     --main-text-color: var(--white-color);
+    --additional-text-color: var(--black-color);
 }

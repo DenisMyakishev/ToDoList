@@ -55,8 +55,12 @@
 
 .outline.green{
     background: -webkit-linear-gradient(0deg, transparent 50%, var(--green-color) 50%);
-    background-size: 400px 80px;
+    background-size: 800px 80px;
     border: 2px solid var(--green-color);
+}
+
+.outline.green:hover{
+    background-position: 400px 0px;
 }
 
 .outline:hover{

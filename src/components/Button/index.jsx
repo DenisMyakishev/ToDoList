@@ -1,12 +1,15 @@
 import styles from './index.module.css';
 
-const Button = ({ children, handleClick, ...props }) => {
-	const classes = [styles.branded];
+const Button = ({ children, onClick, type = 'button', className = '', ...props }) => {
+	const classes = [className, styles.branded];
+	const viewClasses = ['view', 'color'];
 	for (let key in props) {
-		classes.push(styles[`${props[key]}`]);
+		if (viewClasses.includes(key)) {
+			classes.push(styles[`${props[key]}`]);
+		}
 	}
 	return (
-		<button onClick={handleClick} className={classes.join(' ')}>
+		<button type={type} onClick={onClick} className={classes.join(' ')}>
 			{children}
 		</button>
 	);
