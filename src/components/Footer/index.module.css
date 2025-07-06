@@ -1,0 +1,9 @@
+.footerContainer{
+    justify-content: space-around;
+}
+
+.links{
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+}

@@ -1,0 +1,30 @@
+:root{
+
+    /* display width */
+    --large-desktop: 1440px;
+    --desktop: 1280px;
+    --tablet: 768px;
+    --phone: 480px;
+
+    /* main colors */
+
+    --black-color: rgb(35, 35, 35);
+    --gray-color: rgb(72, 72, 72);
+
+    --purple-color: rgb(154, 23, 154);
+    --dark-purple-color: rgb(88, 12, 88);
+
+    --green-color: rgb(6, 170, 6);
+    --dark-green-color: rgb(7, 128, 7);
+
+    --orange-color: rgb(255, 119, 0);
+    --dark-orange-color: rgb(195, 97, 0);
+
+    --red-color: rgb(224, 21, 21);
+    --dark-red-color: rgb(151, 14, 14);
+
+    --white-color: rgb(255, 255, 255);
+
+    /* pages variables */
+    --main-text-color: var(--white-color);
+}

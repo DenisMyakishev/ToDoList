@@ -1,0 +1,13 @@
+.toDo{
+    margin: 20px 0;
+}
+
+.toDoContainer{
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
+
+.toDoTitle{
+    margin-bottom: 10px;
+}

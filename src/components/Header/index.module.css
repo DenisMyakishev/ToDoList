@@ -1,0 +1,10 @@
+.header{
+    width: 100%;
+    background-color: var(--black-color);
+}
+
+.headerContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}

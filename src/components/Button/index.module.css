@@ -1,0 +1,64 @@
+.branded{
+    padding: 10px;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    transition: all 0.5s;
+    background-color: var(--purple-color);
+}
+
+.branded:hover{
+     background-color: var(--dark-purple-color);
+}
+
+.orange{
+    background-color: var(--orange-color);
+}
+
+.orange:hover{
+    background-color: var(--dark-orange-color);
+}
+
+.green{
+    background-color: var(--green-color);
+}
+
+.green:hover{
+    background-color: var(--dark-green-color);
+}
+
+.red{
+    background-color: var(--red-color);
+}
+
+.red:hover{
+    background-color: var(--dark-red-color);
+}
+
+.outline{
+    background: -webkit-linear-gradient(0deg, transparent 50%, var(--purple-color) 50%);
+    background-size: 400px 80px;
+    border: 2px solid var(--purple-color);
+}
+
+.outline.red{
+    background: -webkit-linear-gradient(0deg, transparent 50%, var(--red-color) 50%);
+    background-size: 400px 80px;
+    border: 2px solid var(--red-color);
+}
+
+.outline.orange{
+    background: -webkit-linear-gradient(0deg, transparent 50%, var(--orange-color) 50%);
+    background-size: 400px 80px;
+    border: 2px solid var(--orange-color);
+}
+
+.outline.green{
+    background: -webkit-linear-gradient(0deg, transparent 50%, var(--green-color) 50%);
+    background-size: 400px 80px;
+    border: 2px solid var(--green-color);
+}
+
+.outline:hover{
+    background-position: 200px 0px;
+}
