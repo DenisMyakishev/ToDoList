@@ -1,14 +1,18 @@
-import { useState } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import Button from '../Button';
 import styles from './index.module.css';
 import './transition.css';
 import Modal from '../Modal';
 import ChangeTaskForm from '../ChangeTaskForm';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import { ToDoContext } from '../../context/todo.context';
 
-const List = ({ elements, handleRemoveElement, handleChangeElement }) => {
+const List = ({ elements = [] }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const [changeTask, setChangeTask] = useState('');
+	const { setTasks, removeTask } = useContext(ToDoContext);
+
+	
 
 	const handleOpemModal = (oldData) => {
 		setChangeTask(oldData);
@@ -20,12 +24,17 @@ const List = ({ elements, handleRemoveElement, handleChangeElement }) => {
 		setChangeTask('');
 	};
 
+	const handleRemoveElement = async (removeId) => {
+		setTasks((prev) => prev.filter((t) => t.id !== removeId));
+		await removeTask(removeId);
+	};
+
 	return (
 		<div className={styles.list}>
 			<div className={styles.listWrapper}>
-				<TransitionGroup component={null}>
-					{elements.length > 0 ? (
-						elements.map((element) => (
+				{elements.length > 0 ? (
+					<TransitionGroup component={null}>
+						{elements.map((element) => (
 							<CSSTransition
 								key={element.id}
 								nodeRef={element.nodeRef}
@@ -63,18 +72,15 @@ const List = ({ elements, handleRemoveElement, handleChangeElement }) => {
 									</div>
 								</div>
 							</CSSTransition>
-						))
-					) : (
-						<h4 className={styles.message}>List is empty</h4>
-					)}
-				</TransitionGroup>
+						))}
+					</TransitionGroup>
+				) : (
+					<h4 className={styles.message}>List is empty</h4>
+				)}
 			</div>
 			{
 				<Modal isOpen={isOpen} handleCloseModal={handleCloseModal} title="Change">
-					<ChangeTaskForm
-						oldData={changeTask}
-						setFunction={handleChangeElement}
-					/>
+					<ChangeTaskForm oldData={changeTask} />
 				</Modal>
 			}
 		</div>

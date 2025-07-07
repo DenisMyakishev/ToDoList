@@ -1,20 +1,25 @@
-import { useContext, useState } from 'react';
+import { createRef, useContext, useState } from 'react';
 import Input from '../Input';
 import styles from './index.module.css';
 import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
+import * as uuid from 'uuid';
+import { ToDoContext } from '../../context/todo.context';
 
-const AddTaskForm = ({ setFunction }) => {
+const AddTaskForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
+	const { addTask, setTasks } = useContext(ToDoContext);
 	const [data, setData] = useState({
 		title: '',
 		description: '',
 	});
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setFunction({ id: Date.now(), ...data });
+		let newData = { id: uuid.v4(), ...data };
+		setTasks((prev) => [{ ...newData, nodeRef: createRef(null) }, ...prev]);
 		handleCloseModal();
+		await addTask(newData);
 	};
 
 	return (

@@ -3,23 +3,25 @@ import Input from '../Input';
 import styles from './index.module.css';
 import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
+import { AuthContext } from '../../context/auth.context';
 
-const AuthForm = ({ setFunction = () => {} }) => {
+const AuthForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
 	const [data, setData] = useState({
-		login: '',
+		email: '',
 		password: '',
 	});
+	const { signIn } = useContext(AuthContext);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault();
-		setFunction();
 		handleCloseModal();
+		await signIn(data);
 	};
 
 	return (
 		<form className={styles.addTaskForm}>
-			<Input name="login" label="Login" value={data} handleChange={setData} />
+			<Input name="email" label="email" value={data} handleChange={setData} />
 			<Input
 				name="password"
 				label="Password"
