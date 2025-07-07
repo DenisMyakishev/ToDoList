@@ -4,16 +4,16 @@ import styles from './index.module.css';
 import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
 
-const ChangeTaskForm = ({ id, setFunction }) => {
+const ChangeTaskForm = ({ oldData, setFunction }) => {
 	const { handleCloseModal } = useContext(ModalContext);
 	const [data, setData] = useState({
-		title: '',
-		description: '',
+		title: oldData.title,
+		description: oldData.description,
 	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setFunction({ id: id, ...data });
+		setFunction({ id: oldData.id, ...data });
 		handleCloseModal();
 	};
 

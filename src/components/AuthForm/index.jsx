@@ -4,27 +4,28 @@ import styles from './index.module.css';
 import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
 
-const AddTaskForm = ({ setFunction }) => {
+const AuthForm = ({ setFunction = () => {} }) => {
 	const { handleCloseModal } = useContext(ModalContext);
 	const [data, setData] = useState({
-		title: '',
-		description: '',
+		login: '',
+		password: '',
 	});
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setFunction({ id: Date.now(), ...data });
+		setFunction();
 		handleCloseModal();
 	};
 
 	return (
 		<form className={styles.addTaskForm}>
-			<Input name="title" label="Title" value={data} handleChange={setData} />
+			<Input name="login" label="Login" value={data} handleChange={setData} />
 			<Input
-				name="description"
-				label="Description"
+				name="password"
+				label="Password"
 				value={data}
 				handleChange={setData}
+				guarded={true}
 			/>
 			<Button
 				type="submit"
@@ -33,10 +34,10 @@ const AddTaskForm = ({ setFunction }) => {
 				view="outline"
 				onClick={handleSubmit}
 			>
-				Add new task
+				Sign In
 			</Button>
 		</form>
 	);
 };
 
-export default AddTaskForm;
+export default AuthForm;

@@ -1,0 +1,18 @@
+.element-enter {
+  opacity: 0;
+  width: 20px;
+}
+.element-enter-active {
+  opacity: 1;
+  width: 100%;
+  transition: all 500ms ease-in;
+}
+.element-exit {
+  opacity: 1;
+  width: 100%;
+}
+.element-exit-active {
+  opacity: 0;
+  width: 0px;
+  transition: all 500ms ease-in;
+}

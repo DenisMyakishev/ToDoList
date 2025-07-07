@@ -1,17 +1,17 @@
 import List from '../../components/List';
 import styles from './index.module.css';
 import Button from '../../components/Button/index';
-import { useState } from 'react';
+import { createRef, useState } from 'react';
 import Modal from '../../components/Modal';
 import AddTaskModal from '../../components/AddTaskForm';
 
 const ToDo = () => {
 	const [tasks, setTasks] = useState([
-		{ id: 1, title: 'title1', description: `description1` },
-		{ id: 2, title: 'title2', description: `description2` },
-		{ id: 3, title: 'title3', description: `description3` },
-		{ id: 4, title: 'title4', description: `description4` },
-		{ id: 5, title: 'title5', description: `description5` },
+		{ id: 1, title: 'title1', description: `description1`, nodeRef: createRef(null) },
+		{ id: 2, title: 'title2', description: `description2`, nodeRef: createRef(null) },
+		{ id: 3, title: 'title3', description: `description3`, nodeRef: createRef(null) },
+		{ id: 4, title: 'title4', description: `description4`, nodeRef: createRef(null) },
+		{ id: 5, title: 'title5', description: `description5`, nodeRef: createRef(null) },
 	]);
 
 	const [isOpen, setIsOpen] = useState(false);
@@ -24,10 +24,19 @@ const ToDo = () => {
 		setTasks(tasks.filter((t) => t.id !== removeId));
 	};
 
+	const handleAddElement = (newData) => {
+		setTasks((prev) => [{ ...newData, nodeRef: createRef(null) }, ...prev]);
+	};
+
 	const handleChangeElement = (changetData) => {
 		setTasks(
-			tasks.map((t) => (t.id === changetData.id ? { ...changetData } : { ...t })),
+			tasks.map((t) =>
+				t.id === changetData.id
+					? { ...changetData, nodeRef: createRef(null) }
+					: { ...t },
+			),
 		);
+		console.log(tasks);
 	};
 
 	return (
@@ -38,7 +47,7 @@ const ToDo = () => {
 					Add
 				</Button>
 				<Modal isOpen={isOpen} handleCloseModal={handleCloseModal} title="Add">
-					<AddTaskModal setFunction={setTasks} />
+					<AddTaskModal setFunction={handleAddElement} />
 				</Modal>
 				<List
 					elements={tasks}
