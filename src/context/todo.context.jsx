@@ -50,9 +50,7 @@ export function ToDoContextProvider({ children }) {
 	const getTasks = async () => {
 		if (user?.uid) {
 			setIsLoading(true);
-			const querySnapshot = await getDocs(
-				collection(db, `4Z4GEsytlIM9E5cIk9quWZ6tBkE3`),
-			);
+			const querySnapshot = await getDocs(collection(db, user.uid));
 			setTasks(
 				querySnapshot.docs.map((task) => {
 					return { ...task.data(), nodeRef: createRef(null) };

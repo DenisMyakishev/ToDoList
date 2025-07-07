@@ -13,9 +13,3 @@
 .submitBtn:hover{
     color: var(--white-color);
 }
-
-.signUpLink{
-    color: var(--orange-color);
-    display: inline;
-    align-self: flex-end;
-}

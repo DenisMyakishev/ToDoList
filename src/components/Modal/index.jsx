@@ -4,7 +4,13 @@ import styles from './index.module.css';
 import './transition.css';
 import { useRef } from 'react';
 
-const Modal = ({ isOpen, handleCloseModal, title, children }) => {
+const Modal = ({
+	isOpen,
+	handleCloseModal,
+	title,
+	children,
+	afterAnimation = () => {},
+}) => {
 	const nodeRef = useRef();
 	return (
 		<CSSTransition
@@ -13,6 +19,7 @@ const Modal = ({ isOpen, handleCloseModal, title, children }) => {
 			timeout={500}
 			classNames="modal"
 			unmountOnExit
+			onExited={afterAnimation}
 		>
 			<ModalContext.Provider value={{ handleCloseModal }}>
 				<div className={styles.modal} ref={nodeRef}>

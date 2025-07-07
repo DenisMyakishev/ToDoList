@@ -6,9 +6,13 @@ import { useContext, useEffect, useState } from 'react';
 import AuthForm from '../AuthForm';
 import { AuthContext } from '../../context/auth.context';
 import Loader from '../Loader';
+import RegForm from '../RegForm';
+import { SIGN_FORMS } from '../../constants/signForms';
+import { INPUT_TYPE } from '../../constants/input';
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
+	const [signForm, setSignForm] = useState(SIGN_FORMS.authentication);
 	const { user, checkAuth, signOut } = useContext(AuthContext);
 
 	useEffect(() => {
@@ -43,9 +47,16 @@ const Header = () => {
 				<Modal
 					isOpen={isOpen}
 					handleCloseModal={handleCloseModal}
-					title="Sign in"
+					title={signForm === SIGN_FORMS.authentication ? 'Sign In' : 'Sign Up'}
+					afterAnimation={() => {
+						setSignForm(SIGN_FORMS.authentication);
+					}}
 				>
-					<AuthForm />
+					{signForm === SIGN_FORMS.authentication ? (
+						<AuthForm setSignForm={setSignForm} />
+					) : (
+						<RegForm />
+					)}
 				</Modal>
 			</div>
 		</header>

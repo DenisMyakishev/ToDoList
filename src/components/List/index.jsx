@@ -12,8 +12,6 @@ const List = ({ elements = [] }) => {
 	const [changeTask, setChangeTask] = useState('');
 	const { setTasks, removeTask } = useContext(ToDoContext);
 
-	
-
 	const handleOpemModal = (oldData) => {
 		setChangeTask(oldData);
 		setIsOpen(true);
