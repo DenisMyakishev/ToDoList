@@ -14,10 +14,13 @@ import { AuthContext } from './auth.context';
 
 export const ToDoContext = createContext(null);
 
-export function ToDoContextProvider({ children }) {
+export function ToDoContextProvider({ children, ...props }) {
 	const [tasks, setTasks] = useState([]);
 	const { user } = useContext(AuthContext);
 	const [isLoading, setIsLoading] = useState(false);
+	const [searchQuery, setSearchQuery] = useState({
+		query: '',
+	});
 
 	const db = getFirestore(DataBase.app);
 
@@ -62,7 +65,17 @@ export function ToDoContextProvider({ children }) {
 
 	return (
 		<ToDoContext.Provider
-			value={{ tasks, setTasks, addTask, getTasks, removeTask, updateTask }}
+			value={{
+				tasks,
+				setTasks,
+				addTask,
+				getTasks,
+				removeTask,
+				updateTask,
+				searchQuery,
+				setSearchQuery,
+				...props,
+			}}
 		>
 			{children}
 

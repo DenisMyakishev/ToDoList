@@ -8,8 +8,14 @@ const Button = ({ children, onClick, type = 'button', className = '', ...props }
 			classes.push(styles[`${props[key]}`]);
 		}
 	}
+
+	const handleClick = (e) => {
+		e.stopPropagation();
+		onClick(e);
+	};
+
 	return (
-		<button type={type} onClick={onClick} className={classes.join(' ')}>
+		<button type={type} onClick={handleClick} className={classes.join(' ')}>
 			{children}
 		</button>
 	);

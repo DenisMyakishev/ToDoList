@@ -15,7 +15,7 @@ const ChangeTaskForm = ({ oldData }) => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		let newData = { id: oldData.id, ...data };
+		let newData = { id: oldData.id, ...data, checked: oldData.checked };
 		setTasks((prev) =>
 			prev.map((t) =>
 				t.id === newData.id ? { ...newData, nodeRef: createRef(null) } : { ...t },

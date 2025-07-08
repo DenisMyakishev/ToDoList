@@ -10,3 +10,10 @@
 .toDoTitle{
     margin-bottom: 10px;
 }
+
+.actions{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    column-gap: 10px;
+}

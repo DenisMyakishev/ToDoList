@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from 'react';
+import { useState, useContext } from 'react';
 import Button from '../Button';
 import styles from './index.module.css';
 import './transition.css';
@@ -27,6 +27,23 @@ const List = ({ elements = [] }) => {
 		await removeTask(removeId);
 	};
 
+	const toggleSelectElement = (e, element) => {
+		e.stopPropagation();
+		setTasks((prev) =>
+			prev.map((p) => {
+				if (p.id === element.id) {
+					if (p.checked === true) {
+						return { ...p, checked: false };
+					} else {
+						return { ...p, checked: true };
+					}
+				}
+				return p;
+			}),
+		);
+		e.target.classList.toggle(`${styles.active}`);
+	};
+
 	return (
 		<div className={styles.list}>
 			<div className={styles.listWrapper}>
@@ -39,7 +56,11 @@ const List = ({ elements = [] }) => {
 								timeout={500}
 								classNames="element"
 							>
-								<div className={styles.listElement} ref={element.nodeRef}>
+								<div
+									className={styles.listElement}
+									ref={element.nodeRef}
+									onClick={(e) => toggleSelectElement(e, element)}
+								>
 									<div className={styles.listElementWrapper}>
 										<div className={styles.data}>
 											<span className={styles.title}>
@@ -53,7 +74,7 @@ const List = ({ elements = [] }) => {
 											<Button
 												color="orange"
 												view="outline"
-												onClick={() => handleOpemModal(element)}
+												onClick={(e) => handleOpemModal(element)}
 											>
 												Change
 											</Button>

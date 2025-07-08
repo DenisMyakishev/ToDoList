@@ -10,11 +10,19 @@ const Input = ({
 	required = false,
 	handleChange,
 	guarded = false,
+	placeholder = '',
+	clearByClick = false,
 }) => {
 	const [showGuardInput, setShowGuardInput] = useState(!guarded);
 
 	const handleToggleShowGuardInput = () => {
 		setShowGuardInput((prev) => !prev);
+	};
+
+	const handleClearInput = () => {
+		handleChange((prev) => {
+			return { ...prev, [`${name}`]: '' };
+		});
 	};
 
 	return (
@@ -28,7 +36,7 @@ const Input = ({
 				id={name}
 				value={value[`${name}`]}
 				required={required}
-				placeholder={label.toLocaleLowerCase()}
+				placeholder={placeholder !== '' ? placeholder : label.toLocaleLowerCase()}
 				type={!showGuardInput ? INPUT_TYPE.password : INPUT_TYPE.text}
 				onChange={(e) => {
 					handleChange((prev) => {
@@ -38,6 +46,11 @@ const Input = ({
 			/>
 			{guarded && (
 				<LogoEye show={showGuardInput} onClick={handleToggleShowGuardInput} />
+			)}
+			{clearByClick && (
+				<button className={styles.clearInput} onClick={handleClearInput}>
+					<div className={styles.crossContainer}></div>
+				</button>
 			)}
 		</div>
 	);
