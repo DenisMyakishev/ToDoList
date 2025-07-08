@@ -1,16 +1,18 @@
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 import ToDo from '../pages/ToDo';
-import '../API/dataBase.js';
 import { AuthContextProvider } from '../context/auth.context.jsx';
+import { LoaderContextProvider } from '../context/loader.context.jsx';
 
 export const AppRoutes = () => {
 	return (
 		<>
 			<AuthContextProvider>
-				<Header />
-				<ToDo />
-				<Footer />
+				<LoaderContextProvider>
+					<Header />
+					<ToDo />
+					<Footer />
+				</LoaderContextProvider>
 			</AuthContextProvider>
 		</>
 	);

@@ -6,11 +6,13 @@ import {
 } from 'firebase/auth';
 import DataBase from '../API/dataBase';
 import Loader from '../components/Loader';
+import { SIGN_FORMS } from '../constants/signForms';
 
 export const AuthContext = createContext(null);
 
 export function AuthContextProvider({ children }) {
 	const [user, setUser] = useState(null);
+	const [signForm, setSignForm] = useState(SIGN_FORMS.authentication);
 	const [isLoading, setIsLoading] = useState(false);
 
 	const signUp = async ({ email, password }) => {
@@ -61,7 +63,9 @@ export function AuthContextProvider({ children }) {
 		setIsLoading(false);
 	};
 	return (
-		<AuthContext.Provider value={{ user, signUp, signIn, signOut, checkAuth }}>
+		<AuthContext.Provider
+			value={{ user, signUp, signIn, signOut, checkAuth, signForm, setSignForm }}
+		>
 			{children}
 
 			<Loader isLoading={isLoading} />

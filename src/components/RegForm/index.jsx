@@ -4,6 +4,7 @@ import styles from './index.module.css';
 import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
 import { AuthContext } from '../../context/auth.context';
+import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 
 const RegForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -40,10 +41,10 @@ const RegForm = () => {
 				guarded={true}
 			/>
 			<Button
-				type="submit"
+				type={BUTTON_TYPES.submit}
 				className={styles.submitBtn}
-				color="green"
-				view="outline"
+				color={BUTTON_COLORS.green}
+				view={BUTTON_VIEW.outline}
 				onClick={handleSubmit}
 			>
 				Sign Up

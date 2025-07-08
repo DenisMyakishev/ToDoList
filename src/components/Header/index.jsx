@@ -5,15 +5,13 @@ import Modal from '../Modal';
 import { useContext, useEffect, useState } from 'react';
 import AuthForm from '../AuthForm';
 import { AuthContext } from '../../context/auth.context';
-import Loader from '../Loader';
 import RegForm from '../RegForm';
 import { SIGN_FORMS } from '../../constants/signForms';
-import { INPUT_TYPE } from '../../constants/input';
+import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
 
 const Header = () => {
 	const [isOpen, setIsOpen] = useState(false);
-	const [signForm, setSignForm] = useState(SIGN_FORMS.authentication);
-	const { user, checkAuth, signOut } = useContext(AuthContext);
+	const { user, checkAuth, signOut, signForm, setSignForm } = useContext(AuthContext);
 
 	useEffect(() => {
 		checkAuth();
@@ -31,15 +29,19 @@ const Header = () => {
 		<header className={styles.header}>
 			<div className={`container ${styles.headerContainer}`}>
 				<LogoTodo />
-				<nav className="navigation">
-					<Button view="outline">ToDo List</Button>
+				<nav>
+					<Button view={BUTTON_VIEW.outline}>ToDo List</Button>
 				</nav>
 				{user === null ? (
-					<Button color="orange" onClick={handleOpenModal}>
+					<Button color={BUTTON_COLORS.orange} onClick={handleOpenModal}>
 						Sign In
 					</Button>
 				) : (
-					<Button color="orange" view="outline" onClick={signOut}>
+					<Button
+						color={BUTTON_COLORS.orange}
+						view={BUTTON_VIEW.outline}
+						onClick={signOut}
+					>
 						Sign Out
 					</Button>
 				)}
@@ -52,11 +54,7 @@ const Header = () => {
 						setSignForm(SIGN_FORMS.authentication);
 					}}
 				>
-					{signForm === SIGN_FORMS.authentication ? (
-						<AuthForm setSignForm={setSignForm} />
-					) : (
-						<RegForm />
-					)}
+					{signForm === SIGN_FORMS.authentication ? <AuthForm /> : <RegForm />}
 				</Modal>
 			</div>
 		</header>

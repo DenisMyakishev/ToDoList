@@ -11,57 +11,40 @@ import {
 	updateDoc,
 } from 'firebase/firestore';
 import { AuthContext } from './auth.context';
+import useAuthAsyncFunc from '../hooks/useAuthAsyncFunc';
 
 export const ToDoContext = createContext(null);
 
 export function ToDoContextProvider({ children, ...props }) {
 	const [tasks, setTasks] = useState([]);
 	const { user } = useContext(AuthContext);
-	const [isLoading, setIsLoading] = useState(false);
-	const [searchQuery, setSearchQuery] = useState({
-		query: '',
+	const [searchQuery, setSearchQuery] = useState('');
+	const db = getFirestore(DataBase.app);
+	const [addTask, addError] = useAuthAsyncFunc(async (data) => {
+		const taskRef = doc(db, `${user.uid}`, `${data.id}`);
+		await setDoc(taskRef, data);
 	});
 
-	const db = getFirestore(DataBase.app);
+	const [removeTask, removeError] = useAuthAsyncFunc(async (taskId) => {
+		await deleteDoc(doc(db, `${user.uid}`, `${taskId}`));
+	});
 
-	const addTask = async (data) => {
-		if (user?.uid) {
-			setIsLoading(true);
-			const taskRef = doc(db, `${user.uid}`, `${data.id}`);
-			await setDoc(taskRef, data);
-			setIsLoading(false);
-		}
-	};
+	const [updateTask, updateError] = useAuthAsyncFunc(async (updatedTask) => {
+		const updatedTaskRef = doc(db, `${user.uid}`, `${updatedTask.id}`);
+		await updateDoc(updatedTaskRef, updatedTask);
+	});
 
-	const removeTask = async (taskId) => {
+	const [getTasks, getError] = useAuthAsyncFunc(async () => {
 		if (user?.uid) {
-			setIsLoading(true);
-			await deleteDoc(doc(db, `${user.uid}`, `${taskId}`));
-			setIsLoading(false);
-		}
-	};
-
-	const updateTask = async (updatedTask) => {
-		if (user?.uid) {
-			setIsLoading(true);
-			const updatedTaskRef = doc(db, `${user.uid}`, `${updatedTask.id}`);
-			await updateDoc(updatedTaskRef, updatedTask);
-			setIsLoading(false);
-		}
-	};
-
-	const getTasks = async () => {
-		if (user?.uid) {
-			setIsLoading(true);
 			const querySnapshot = await getDocs(collection(db, user.uid));
 			setTasks(
 				querySnapshot.docs.map((task) => {
 					return { ...task.data(), nodeRef: createRef(null) };
 				}),
 			);
-			setIsLoading(false);
+		} else {
 		}
-	};
+	});
 
 	return (
 		<ToDoContext.Provider
@@ -78,8 +61,6 @@ export function ToDoContextProvider({ children, ...props }) {
 			}}
 		>
 			{children}
-
-			<Loader isLoading={isLoading} />
 		</ToDoContext.Provider>
 	);
 }

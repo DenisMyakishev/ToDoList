@@ -5,14 +5,16 @@ import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
 import { AuthContext } from '../../context/auth.context';
 import { SIGN_FORMS } from '../../constants/signForms';
+import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 
-const AuthForm = ({ setSignForm }) => {
+const AuthForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
+	const { signIn, setSignForm } = useContext(AuthContext);
+
 	const [data, setData] = useState({
 		email: '',
 		password: '',
 	});
-	const { signIn } = useContext(AuthContext);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -40,10 +42,10 @@ const AuthForm = ({ setSignForm }) => {
 					Sign Up
 				</a>
 				<Button
-					type="submit"
+					type={BUTTON_TYPES.submit}
 					className={styles.submitBtn}
-					color="green"
-					view="outline"
+					color={BUTTON_COLORS.green}
+					view={BUTTON_VIEW.outline}
 					onClick={handleSubmit}
 				>
 					Sign In

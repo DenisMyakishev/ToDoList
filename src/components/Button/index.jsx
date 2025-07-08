@@ -1,10 +1,16 @@
+import { BUTTON_DISPLAYCLASSES, BUTTON_TYPES } from '../../constants/button';
 import styles from './index.module.css';
 
-const Button = ({ children, onClick, type = 'button', className = '', ...props }) => {
+const Button = ({
+	children,
+	onClick,
+	type = BUTTON_TYPES.button,
+	className = '',
+	...props
+}) => {
 	const classes = [className, styles.branded];
-	const viewClasses = ['view', 'color'];
 	for (let key in props) {
-		if (viewClasses.includes(key)) {
+		if (BUTTON_DISPLAYCLASSES.includes(key)) {
 			classes.push(styles[`${props[key]}`]);
 		}
 	}

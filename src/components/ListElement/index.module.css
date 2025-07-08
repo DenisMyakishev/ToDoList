@@ -1,0 +1,36 @@
+.listElement{
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.listElement:hover{
+    scale: 0.95;
+}
+
+.listElementWrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    border-radius: 15px;
+    background-color: var(--purple-color);
+    transition: all 0.5s;
+}
+
+.listElementWrapper.active{
+    transform: skewX(-15deg);
+    background-color: var(--dark-purple-color);
+}
+
+.data{
+    display: flex;
+    flex-direction: column;
+}
+
+.title{
+    font-weight: bold;
+}
+
+.actions{
+    display: flex;
+    column-gap: 10px;
+}

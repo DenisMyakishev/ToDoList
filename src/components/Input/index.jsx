@@ -20,9 +20,22 @@ const Input = ({
 	};
 
 	const handleClearInput = () => {
-		handleChange((prev) => {
-			return { ...prev, [`${name}`]: '' };
-		});
+		currentHandleChange('');
+	};
+
+	const isObjectValue = typeof value === 'object';
+	const currentValue = isObjectValue ? value[`${name}`] : value;
+	const currentPlaceholder =
+		placeholder !== '' ? placeholder : label.toLocaleLowerCase();
+
+	const currentHandleChange = (value) => {
+		if (isObjectValue) {
+			handleChange((prev) => {
+				return { ...prev, [`${name}`]: value };
+			});
+		} else {
+			handleChange(value);
+		}
 	};
 
 	return (
@@ -34,14 +47,12 @@ const Input = ({
 				className={styles.input}
 				name={name}
 				id={name}
-				value={value[`${name}`]}
+				value={currentValue}
 				required={required}
-				placeholder={placeholder !== '' ? placeholder : label.toLocaleLowerCase()}
+				placeholder={currentPlaceholder}
 				type={!showGuardInput ? INPUT_TYPE.password : INPUT_TYPE.text}
 				onChange={(e) => {
-					handleChange((prev) => {
-						return { ...prev, [`${name}`]: e.target.value };
-					});
+					currentHandleChange(e.target.value);
 				}}
 			/>
 			{guarded && (

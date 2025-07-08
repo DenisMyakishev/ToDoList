@@ -5,6 +5,7 @@ import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
 import * as uuid from 'uuid';
 import { ToDoContext } from '../../context/todo.context';
+import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 
 const AddTaskForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -17,7 +18,7 @@ const AddTaskForm = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		let newData = { id: uuid.v4(), ...data };
-		setTasks((prev) => [{ ...newData, nodeRef: createRef(null) }, ...prev]);
+		setTasks((tasks) => [{ ...newData, nodeRef: createRef(null) }, ...tasks]);
 		handleCloseModal();
 		await addTask(newData);
 	};
@@ -32,10 +33,10 @@ const AddTaskForm = () => {
 				handleChange={setData}
 			/>
 			<Button
-				type="submit"
+				type={BUTTON_TYPES.submit}
 				className={styles.submitBtn}
-				color="green"
-				view="outline"
+				color={BUTTON_COLORS.green}
+				view={BUTTON_VIEW.outline}
 				onClick={handleSubmit}
 			>
 				Add new task

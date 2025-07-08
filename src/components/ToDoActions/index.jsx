@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import Button from '../Button';
 import Input from '../Input';
 import styles from './index.module.css';
 import Modal from '../Modal';
 import AddTaskForm from '../AddTaskForm';
 import { ToDoContext } from '../../context/todo.context';
+import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
 
 const ToDoActions = () => {
-	const { setSearchQuery, searchQuery, removeTask, tasks, setTasks } =
-		useContext(ToDoContext);
+	const { setSearchQuery, searchQuery, removeTask, setTasks } = useContext(ToDoContext);
 	const [isOpen, setIsOpen] = useState(false);
 
 	const handleOpenModal = () => {
@@ -20,26 +20,35 @@ const ToDoActions = () => {
 	};
 
 	const handleRemoveSelected = () => {
-		const newTasks = tasks
-			.map((p) => {
-				if (p.checked === true) {
-					removeTask(p.id);
-					return null;
-				} else {
-					return p;
-				}
-			})
-			.filter((t) => t !== null && t);
-		setTasks(newTasks);
+		setTasks((tasks) =>
+			tasks
+				.map((t) => {
+					if (t.checked === true) {
+						removeTask(t.id);
+						return null;
+					} else {
+						return t;
+					}
+				})
+				.filter((t) => t !== null && t),
+		);
 	};
 
 	return (
 		<>
 			<div className={styles.actions}>
-				<Button color="green" view="outline" onClick={handleOpenModal}>
+				<Button
+					color={BUTTON_COLORS.green}
+					view={BUTTON_VIEW.outline}
+					onClick={handleOpenModal}
+				>
 					Add
 				</Button>
-				<Button color="red" view="outline" onClick={handleRemoveSelected}>
+				<Button
+					color={BUTTON_COLORS.red}
+					view={BUTTON_VIEW.outline}
+					onClick={handleRemoveSelected}
+				>
 					Remove selected
 				</Button>
 				<Input
@@ -48,7 +57,6 @@ const ToDoActions = () => {
 					handleChange={setSearchQuery}
 					placeholder="Search"
 					clearByClick={true}
-					className={styles.search}
 				/>
 			</div>
 			<Modal isOpen={isOpen} handleCloseModal={handleCloseModal} title="Add">
