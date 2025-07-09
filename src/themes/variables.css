@@ -27,4 +27,14 @@
 
     /* pages variables */
     --main-text-color: var(--white-color);
+    --additional-text-color: var(--black-color);
+
+    /* font size */
+    --font-size-xs: 10px;
+    --font-size-s: 12px;
+    --font-size-m: 16px;
+    --font-size-l: 20px;
+    --font-size-xl: 24px;
+    --font-size-xxl: 28px;
+
 }

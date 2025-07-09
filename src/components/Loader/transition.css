@@ -1,0 +1,18 @@
+.loader-btn {
+  margin-right: 0.5rem;
+}
+
+.loader-enter {
+  opacity: 0;
+}
+.loader-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.loader-exit {
+  opacity: 1;
+}
+.loader-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}

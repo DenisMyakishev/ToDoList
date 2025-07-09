@@ -1,11 +1,25 @@
 import styles from './index.module.css';
+import './transition.css';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
+import ListElement from '../ListElement';
 
-const List = (elements) => {
+const List = ({ elements = [] }) => {
 	return (
 		<div className={styles.list}>
 			<div className={styles.listWrapper}>
 				{elements.length > 0 ? (
-					<div className="element"></div>
+					<TransitionGroup component={null}>
+						{elements.map((element) => (
+							<CSSTransition
+								key={element.id}
+								nodeRef={element.nodeRef}
+								timeout={500}
+								classNames="element"
+							>
+								<ListElement element={element} />
+							</CSSTransition>
+						))}
+					</TransitionGroup>
 				) : (
 					<h4 className={styles.message}>List is empty</h4>
 				)}

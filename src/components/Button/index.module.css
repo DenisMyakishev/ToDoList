@@ -58,7 +58,6 @@
     background-size: 400px 80px;
     border: 2px solid var(--green-color);
 }
-
 .outline:hover{
     background-position: 200px 0px;
 }

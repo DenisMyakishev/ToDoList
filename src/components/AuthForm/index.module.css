@@ -1,0 +1,21 @@
+.addTaskForm{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+    margin-top: 10px;
+}
+
+.submitBtn{
+    color: var(--black-color);
+}
+
+.submitBtn:hover{
+    color: var(--white-color);
+}
+
+.signUpLink{
+    color: var(--orange-color);
+    display: inline;
+    align-self: flex-end;
+}
