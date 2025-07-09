@@ -1,41 +1,31 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { LogoEye } from '../../assets/LogoEye';
 import { INPUT_TYPE } from '../../constants/input';
 import styles from './index.module.css';
 
 const Input = ({
 	name,
-	value,
 	label = '',
-	required = false,
-	handleChange,
-	guarded = false,
-	placeholder = '',
 	clearByClick = false,
+	guarded = false,
+	onClearInput,
+	errorMessage,
+	forcedFocus,
+	...inputProps
 }) => {
 	const [showGuardInput, setShowGuardInput] = useState(!guarded);
+	const [focused, setFocused] = useState(false);
+
+	useEffect(() => {
+		forcedFocus && setFocused(true);
+	}, [forcedFocus]);
 
 	const handleToggleShowGuardInput = () => {
 		setShowGuardInput((prev) => !prev);
 	};
 
-	const handleClearInput = () => {
-		currentHandleChange('');
-	};
-
-	const isObjectValue = typeof value === 'object';
-	const currentValue = isObjectValue ? value[`${name}`] : value;
-	const currentPlaceholder =
-		placeholder !== '' ? placeholder : label.toLocaleLowerCase();
-
-	const currentHandleChange = (value) => {
-		if (isObjectValue) {
-			handleChange((prev) => {
-				return { ...prev, [`${name}`]: value };
-			});
-		} else {
-			handleChange(value);
-		}
+	const handleFocused = (e) => {
+		setFocused(true);
 	};
 
 	return (
@@ -47,19 +37,17 @@ const Input = ({
 				className={styles.input}
 				name={name}
 				id={name}
-				value={currentValue}
-				required={required}
-				placeholder={currentPlaceholder}
 				type={!showGuardInput ? INPUT_TYPE.password : INPUT_TYPE.text}
-				onChange={(e) => {
-					currentHandleChange(e.target.value);
-				}}
+				{...inputProps}
+				onBlur={handleFocused}
 			/>
+			<span className={focused ?`${styles.errorMessage} ${styles.visibleError}` : styles.errorMessage}>{errorMessage}</span>
+
 			{guarded && (
 				<LogoEye show={showGuardInput} onClick={handleToggleShowGuardInput} />
 			)}
 			{clearByClick && (
-				<button className={styles.clearInput} onClick={handleClearInput}>
+				<button className={styles.clearInput} onClick={onClearInput}>
 					<div className={styles.crossContainer}></div>
 				</button>
 			)}

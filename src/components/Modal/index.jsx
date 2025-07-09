@@ -3,6 +3,8 @@ import { ModalContext } from '../../context/modal.context';
 import styles from './index.module.css';
 import './transition.css';
 import { useRef } from 'react';
+import Button from '../Button/index';
+import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
 
 const Modal = ({
 	isOpen,
@@ -10,6 +12,7 @@ const Modal = ({
 	title,
 	children,
 	afterAnimation = () => {},
+	closeByCross = true,
 }) => {
 	const nodeRef = useRef();
 	return (
@@ -28,6 +31,24 @@ const Modal = ({
 						<div className={styles.modalWindowWrapper}>
 							<h3 className={styles.title}>{title}</h3>
 							{children}
+							<div className={styles.modalFooter}>
+								<Button
+									color={BUTTON_COLORS.purple}
+									view={BUTTON_VIEW.outline}
+									className={styles.cancelBtn}
+									onClick={handleCloseModal}
+								>
+									Cancel
+								</Button>
+							</div>
+							{closeByCross && (
+								<div
+									className={styles.closeByCross}
+									onClick={handleCloseModal}
+								>
+									<div className={styles.crossWrapper}></div>
+								</div>
+							)}
 						</div>
 					</div>
 				</div>

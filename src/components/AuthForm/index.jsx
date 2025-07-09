@@ -6,6 +6,7 @@ import { ModalContext } from '../../context/modal.context';
 import { AuthContext } from '../../context/auth.context';
 import { SIGN_FORMS } from '../../constants/signForms';
 import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
+import useValidation from '../../hooks/useValidation';
 
 const AuthForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -16,28 +17,58 @@ const AuthForm = () => {
 		password: '',
 	});
 
-	const handleSubmit = async (e) => {
-		e.preventDefault();
-		handleCloseModal();
-		await signIn(data);
-	};
+	const [errors, isValid, forcedFocus, setForcedFocus] = useValidation(data, {
+		email: { isMail: true },
+		password: { minLength: 6, maxLength: 18 },
+	});
+
+	const inputs = [
+		{
+			name: 'email',
+			label: 'email',
+			placeholder: 'email',
+			errorMessage: errors.email,
+		},
+		{
+			name: 'password',
+			label: 'Password',
+			placeholder: 'password',
+			guarded: true,
+			errorMessage: errors.password,
+		},
+	];
 
 	const handleChangeSignForm = (e) => {
 		e.preventDefault();
 		setSignForm(SIGN_FORMS.registration);
 	};
 
+	const handleChange = (e) => {
+		setData({ ...data, [e.target.name]: e.target.value });
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+		if (isValid) {
+			handleCloseModal();
+			await signIn(data);
+		} else {
+			setForcedFocus(true);
+		}
+	};
+
 	return (
 		<>
 			<form className={styles.addTaskForm}>
-				<Input name="email" label="email" value={data} handleChange={setData} />
-				<Input
-					name="password"
-					label="Password"
-					value={data}
-					handleChange={setData}
-					guarded={true}
-				/>
+				{inputs.map((input) => (
+					<Input
+						key={input.name}
+						{...input}
+						value={data[input.name]}
+						onChange={handleChange}
+						forcedFocus={forcedFocus}
+					/>
+				))}
 				<a href="" onClick={handleChangeSignForm} className={styles.signUpLink}>
 					Sign Up
 				</a>

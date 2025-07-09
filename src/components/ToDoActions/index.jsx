@@ -34,6 +34,10 @@ const ToDoActions = () => {
 		);
 	};
 
+	const handleChange = (e) => {
+		setSearchQuery(e.target.value);
+	};
+
 	return (
 		<>
 			<div className={styles.actions}>
@@ -54,9 +58,10 @@ const ToDoActions = () => {
 				<Input
 					name="query"
 					value={searchQuery}
-					handleChange={setSearchQuery}
 					placeholder="Search"
-					clearByClick={true}
+					clearByClick
+					onClearInput={() => setSearchQuery('')}
+					onChange={handleChange}
 				/>
 			</div>
 			<Modal isOpen={isOpen} handleCloseModal={handleCloseModal} title="Add">

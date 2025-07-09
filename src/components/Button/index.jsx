@@ -6,6 +6,7 @@ const Button = ({
 	onClick,
 	type = BUTTON_TYPES.button,
 	className = '',
+	disabled,
 	...props
 }) => {
 	const classes = [className, styles.branded];
@@ -21,7 +22,12 @@ const Button = ({
 	};
 
 	return (
-		<button type={type} onClick={handleClick} className={classes.join(' ')}>
+		<button
+			type={type}
+			onClick={handleClick}
+			className={classes.join(' ')}
+			disabled={disabled}
+		>
 			{children}
 		</button>
 	);

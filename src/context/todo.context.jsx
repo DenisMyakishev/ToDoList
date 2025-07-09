@@ -1,6 +1,5 @@
 import { createContext, createRef, useContext, useState } from 'react';
 import DataBase from '../API/dataBase';
-import Loader from '../components/Loader';
 import {
 	collection,
 	getFirestore,
@@ -20,6 +19,7 @@ export function ToDoContextProvider({ children, ...props }) {
 	const { user } = useContext(AuthContext);
 	const [searchQuery, setSearchQuery] = useState('');
 	const db = getFirestore(DataBase.app);
+
 	const [addTask, addError] = useAuthAsyncFunc(async (data) => {
 		const taskRef = doc(db, `${user.uid}`, `${data.id}`);
 		await setDoc(taskRef, data);
@@ -42,7 +42,6 @@ export function ToDoContextProvider({ children, ...props }) {
 					return { ...task.data(), nodeRef: createRef(null) };
 				}),
 			);
-		} else {
 		}
 	});
 

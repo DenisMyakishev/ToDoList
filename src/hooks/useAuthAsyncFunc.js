@@ -3,14 +3,14 @@ import { AuthContext } from '../context/auth.context';
 import { LoaderContext } from '../context/loader.context';
 
 const useAuthAsyncFunc = (callback) => {
-	const {setIsLoading} = useContext(LoaderContext)
+	const { setIsLoading } = useContext(LoaderContext);
 	const [error, setError] = useState('');
 	const { user } = useContext(AuthContext);
-	const asyncFunc = async () => {
+	const asyncFunc = async (prop) => {
 		try {
 			setIsLoading(true);
 			if (user?.uid) {
-				await callback();
+				await callback(prop);
 			}
 		} catch (error) {
 			setError(error.message);
