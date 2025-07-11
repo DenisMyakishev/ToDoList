@@ -1,4 +1,4 @@
-import { createContext, createRef, useContext, useState } from 'react';
+import { createContext, createRef, useContext, useEffect, useState } from 'react';
 import DataBase from '../API/dataBase';
 import {
 	collection,
@@ -10,7 +10,7 @@ import {
 	updateDoc,
 } from 'firebase/firestore';
 import { AuthContext } from './auth.context';
-import useAuthAsyncFunc from '../hooks/useAuthAsyncFunc';
+import useAsyncFunc from '../hooks/useAsyncFunc';
 
 export const ToDoContext = createContext(null);
 
@@ -19,31 +19,46 @@ export function ToDoContextProvider({ children, ...props }) {
 	const { user } = useContext(AuthContext);
 	const [searchQuery, setSearchQuery] = useState('');
 	const db = getFirestore(DataBase.app);
+	const condition = user !== null;
 
-	const [addTask, addError] = useAuthAsyncFunc(async (data) => {
-		const taskRef = doc(db, `${user.uid}`, `${data.id}`);
-		await setDoc(taskRef, data);
-	});
-
-	const [removeTask, removeError] = useAuthAsyncFunc(async (taskId) => {
-		await deleteDoc(doc(db, `${user.uid}`, `${taskId}`));
-	});
-
-	const [updateTask, updateError] = useAuthAsyncFunc(async (updatedTask) => {
-		const updatedTaskRef = doc(db, `${user.uid}`, `${updatedTask.id}`);
-		await updateDoc(updatedTaskRef, updatedTask);
-	});
-
-	const [getTasks, getError] = useAuthAsyncFunc(async () => {
-		if (user?.uid) {
-			const querySnapshot = await getDocs(collection(db, user.uid));
-			setTasks(
-				querySnapshot.docs.map((task) => {
-					return { ...task.data(), nodeRef: createRef(null) };
-				}),
-			);
+	useEffect(() => {
+		if (user === null) {
+			setTasks([]);
+		} else {
+			getTasks();
 		}
-	});
+	}, [user]);
+
+	const addTask = useAsyncFunc(async (data) => {
+		const taskRef = doc(db, `${user.uid}`, `${data.id}`);
+		return await setDoc(taskRef, data);
+	}, condition);
+
+	const removeTask = useAsyncFunc(async (taskId) => {
+		return await deleteDoc(doc(db, `${user.uid}`, taskId));
+	}, condition);
+
+	const removeSelectedTasks = useAsyncFunc(async (tasks) => {
+		for (let i = 0; i < tasks.length; i++) {
+			if (tasks[i].checked === true) {
+				return await removeTask(tasks[i].id);
+			}
+		}
+	}, condition);
+
+	const updateTask = useAsyncFunc(async (updatedTask) => {
+		const updatedTaskRef = doc(db, `${user.uid}`, `${updatedTask.id}`);
+		return await updateDoc(updatedTaskRef, updatedTask);
+	}, condition);
+
+	const getTasks = useAsyncFunc(async () => {
+		const querySnapshot = await getDocs(collection(db, user.uid));
+		setTasks(
+			querySnapshot.docs.map((task) => {
+				return { ...task.data(), nodeRef: createRef(null) };
+			}),
+		);
+	}, condition);
 
 	return (
 		<ToDoContext.Provider
@@ -51,8 +66,8 @@ export function ToDoContextProvider({ children, ...props }) {
 				tasks,
 				setTasks,
 				addTask,
-				getTasks,
 				removeTask,
+				removeSelectedTasks,
 				updateTask,
 				searchQuery,
 				setSearchQuery,

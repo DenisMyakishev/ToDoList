@@ -25,14 +25,14 @@ const AuthForm = () => {
 	const inputs = [
 		{
 			name: 'email',
-			label: 'email',
-			placeholder: 'email',
+			label: 'Email',
+			placeholder: 'Email',
 			errorMessage: errors.email,
 		},
 		{
 			name: 'password',
 			label: 'Password',
-			placeholder: 'password',
+			placeholder: 'Password',
 			guarded: true,
 			errorMessage: errors.password,
 		},
@@ -50,39 +50,37 @@ const AuthForm = () => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (isValid) {
-			handleCloseModal();
 			await signIn(data);
+			handleCloseModal();
 		} else {
 			setForcedFocus(true);
 		}
 	};
 
 	return (
-		<>
-			<form className={styles.addTaskForm}>
-				{inputs.map((input) => (
-					<Input
-						key={input.name}
-						{...input}
-						value={data[input.name]}
-						onChange={handleChange}
-						forcedFocus={forcedFocus}
-					/>
-				))}
-				<a href="" onClick={handleChangeSignForm} className={styles.signUpLink}>
-					Sign Up
-				</a>
-				<Button
-					type={BUTTON_TYPES.submit}
-					className={styles.submitBtn}
-					color={BUTTON_COLORS.green}
-					view={BUTTON_VIEW.outline}
-					onClick={handleSubmit}
-				>
-					Sign In
-				</Button>
-			</form>
-		</>
+		<form className={styles.addTaskForm}>
+			{inputs.map((input) => (
+				<Input
+					key={input.name}
+					{...input}
+					value={data[input.name]}
+					onChange={handleChange}
+					forcedFocus={forcedFocus}
+				/>
+			))}
+			<a href="" onClick={handleChangeSignForm} className={styles.signUpLink}>
+				Sign Up
+			</a>
+			<Button
+				type={BUTTON_TYPES.submit}
+				className={styles.submitBtn}
+				color={BUTTON_COLORS.green}
+				view={BUTTON_VIEW.outline}
+				onClick={handleSubmit}
+			>
+				Sign In
+			</Button>
+		</form>
 	);
 };
 

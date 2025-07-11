@@ -1,4 +1,4 @@
-import { createRef, useContext, useState } from 'react';
+import { createRef, useContext, useEffect, useState } from 'react';
 import Input from '../Input';
 import styles from './index.module.css';
 import Button from '../Button';
@@ -25,15 +25,13 @@ const AddTaskForm = () => {
 		{
 			name: 'title',
 			label: 'Title',
-			type: 'text',
-			placeholder: 'title',
+			placeholder: 'Title',
 			errorMessage: errors.title,
 		},
 		{
 			name: 'description',
 			label: 'Description',
-			type: 'text',
-			placeholder: 'description',
+			placeholder: 'Description',
 			errorMessage: errors.description,
 		},
 	];
@@ -46,9 +44,10 @@ const AddTaskForm = () => {
 		e.preventDefault();
 		if (isValid) {
 			let newData = { id: uuid.v4(), ...data };
-			setTasks((tasks) => [{ ...newData, nodeRef: createRef(null) }, ...tasks]);
+			await addTask(newData).then(() => {
+				setTasks((tasks) => [{ ...newData, nodeRef: createRef(null) }, ...tasks]);
+			});
 			handleCloseModal();
-			await addTask(newData);
 		} else {
 			setForcedFocus(true);
 		}

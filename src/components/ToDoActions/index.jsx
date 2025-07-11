@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import Button from '../Button';
 import Input from '../Input';
 import styles from './index.module.css';
@@ -6,31 +6,16 @@ import Modal from '../Modal';
 import AddTaskForm from '../AddTaskForm';
 import { ToDoContext } from '../../context/todo.context';
 import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
+import useModal from '../../hooks/useModal';
 
 const ToDoActions = () => {
-	const { setSearchQuery, searchQuery, removeTask, setTasks } = useContext(ToDoContext);
-	const [isOpen, setIsOpen] = useState(false);
+	const { setSearchQuery, searchQuery, removeSelectedTasks, setTasks, tasks } =
+		useContext(ToDoContext);
+	const [isOpen, handleOpenModal, handleCloseModal] = useModal(false);
 
-	const handleOpenModal = () => {
-		setIsOpen(true);
-	};
-
-	const handleCloseModal = () => {
-		setIsOpen(false);
-	};
-
-	const handleRemoveSelected = () => {
-		setTasks((tasks) =>
-			tasks
-				.map((t) => {
-					if (t.checked === true) {
-						removeTask(t.id);
-						return null;
-					} else {
-						return t;
-					}
-				})
-				.filter((t) => t !== null && t),
+	const handleRemoveSelected = async () => {
+		await removeSelectedTasks(tasks).then((res) =>
+			setTasks(tasks.filter((t) => !t.selected && t)),
 		);
 	};
 
@@ -62,6 +47,7 @@ const ToDoActions = () => {
 					clearByClick
 					onClearInput={() => setSearchQuery('')}
 					onChange={handleChange}
+					withoutErrorMessage={true}
 				/>
 			</div>
 			<Modal isOpen={isOpen} handleCloseModal={handleCloseModal} title="Add">

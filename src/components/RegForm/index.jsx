@@ -25,20 +25,20 @@ const RegForm = () => {
 	const inputs = [
 		{
 			name: 'email',
-			label: 'email',
-			placeholder: 'email',
+			label: 'Email',
+			placeholder: 'Email',
 			errorMessage: errors.email,
 		},
 		{
 			name: 'password',
 			label: 'Password',
-			placeholder: 'password',
-			guarded: true,
+			placeholder: 'Password',
 			errorMessage: errors.password,
+			guarded: true,
 		},
 		{
 			name: 'confirmPassword',
-			label: 'ConfirmPassword',
+			label: 'Confirm password',
 			placeholder: 'Confirm password',
 			errorMessage: errors.confirmPassword,
 			guarded: true,
@@ -55,7 +55,6 @@ const RegForm = () => {
 			await signUp({ email: data.email, password: data.password });
 			handleCloseModal();
 		} else {
-			console.log(errors);
 			setForcedFocus(true);
 		}
 	};

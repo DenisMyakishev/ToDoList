@@ -5,7 +5,6 @@ const useValidation = (values, validations) => {
 	const [isValid, setIsValid] = useState(false);
 	const [forcedFocus, setForcedFocus] = useState(false);
 
-
 	useEffect(() => {
 		setErrorMessages('');
 		for (const value in values) {

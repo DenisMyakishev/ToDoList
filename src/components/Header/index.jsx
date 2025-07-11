@@ -2,28 +2,17 @@ import LogoTodo from '../../assets/LogoTodo';
 import Button from '../Button';
 import styles from './index.module.css';
 import Modal from '../Modal';
-import { useContext, useEffect, useState } from 'react';
+import { useContext } from 'react';
 import AuthForm from '../AuthForm';
 import { AuthContext } from '../../context/auth.context';
 import RegForm from '../RegForm';
 import { SIGN_FORMS } from '../../constants/signForms';
 import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
+import useModal from '../../hooks/useModal';
 
 const Header = () => {
-	const [isOpen, setIsOpen] = useState(false);
-	const { user, checkAuth, signOut, signForm, setSignForm } = useContext(AuthContext);
-
-	useEffect(() => {
-		checkAuth();
-	}, []);
-
-	const handleOpenModal = () => {
-		setIsOpen(true);
-	};
-
-	const handleCloseModal = () => {
-		setIsOpen(false);
-	};
+	const [isOpen, handleOpenModal, handleCloseModal] = useModal(false);
+	const { user, signOut, signForm, setSignForm } = useContext(AuthContext);
 
 	return (
 		<header className={styles.header}>

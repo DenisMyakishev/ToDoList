@@ -24,13 +24,13 @@ const ChangeTaskForm = ({ oldData }) => {
 		{
 			name: 'title',
 			label: 'Title',
-			placeholder: 'title',
+			placeholder: 'Title',
 			errorMessage: errors.title,
 		},
 		{
 			name: 'description',
 			label: 'Description',
-			placeholder: 'description',
+			placeholder: 'Description',
 			errorMessage: errors.description,
 		},
 	];
@@ -43,19 +43,19 @@ const ChangeTaskForm = ({ oldData }) => {
 		e.preventDefault();
 		if (isValid) {
 			let newData = { id: oldData.id, ...data };
-			console.log(newData);
-			await updateTask('some');
-			setTasks((tasks) =>
-				tasks.map((t) =>
-					t.id === newData.id
-						? {
-								...newData,
-								nodeRef: createRef(null),
-								checked: oldData.checked,
-						  }
-						: t,
-				),
-			);
+			await updateTask(newData).then(() => {
+				setTasks((tasks) =>
+					tasks.map((t) =>
+						t.id === newData.id
+							? {
+									...newData,
+									nodeRef: createRef(null),
+									selected: oldData.selected,
+							  }
+							: t,
+					),
+				);
+			});
 			handleCloseModal();
 		} else {
 			setForcedFocus(true);
@@ -80,7 +80,7 @@ const ChangeTaskForm = ({ oldData }) => {
 				view={BUTTON_VIEW.outline}
 				onClick={handleSubmit}
 			>
-				Add new task
+				Change task
 			</Button>
 		</form>
 	);
