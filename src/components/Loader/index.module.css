@@ -18,8 +18,8 @@
 
 .clock{
     position: absolute;
-    top: 50%;
-    left: 50%;
+    bottom: 00%;
+    right: 0%;
     transform: translate(-50%, -50%);
     z-index: 3;
 }
@@ -27,31 +27,34 @@
 .circle{
     display: flex;
     background-color: var(--purple-color);
-    width: 300px;
-    height: 300px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    border: 10px solid var(--white-color);
+    border: 5px solid var(--main-text-color);
     justify-content: center;
+    position: relative;
 }
 
 .hours{
-    width: 15px;
-    height: 100px;
-    background-color: var(--white-color);
+    width: 5px;
+    height: 30px;
+    background-color: var(--main-text-color);
     border-radius: 20px;
-    transform-origin: 7.5px 95px;
-    top: 60px;
+    transform-origin: 2.5px 28px;
     position: absolute;
+    top: 20px;
+    left: 50%;
     animation: rotate linear 18s 0s infinite;
 }
 
 .minutes{
-    width: 15px;
-    height: 130px;
-    background-color: var(--white-color);
+    width: 5px;
+    height: 40px;
+    background-color: var(--main-text-color);
     border-radius: 20px;
-    transform-origin: 7.5px 125px;
-    top: 30px;
+    transform-origin: 2.5px 38px;
+    top: 10px;
+    left: 50%;
     position: absolute;
     animation: rotate linear 2s 0s infinite;
 }

@@ -11,9 +11,10 @@ const Input = ({
 	onClearInput,
 	errorMessage,
 	forcedFocus,
+	withoutErrorMessage = false,
 	...inputProps
 }) => {
-	const [showGuardInput, setShowGuardInput] = useState(!guarded);
+	const [isGuardInput, setIsGuardInput] = useState(guarded);
 	const [focused, setFocused] = useState(false);
 
 	useEffect(() => {
@@ -21,10 +22,10 @@ const Input = ({
 	}, [forcedFocus]);
 
 	const handleToggleShowGuardInput = () => {
-		setShowGuardInput((prev) => !prev);
+		setIsGuardInput((prev) => !prev);
 	};
 
-	const handleFocused = (e) => {
+	const handleFocused = () => {
 		setFocused(true);
 	};
 
@@ -37,14 +38,24 @@ const Input = ({
 				className={styles.input}
 				name={name}
 				id={name}
-				type={!showGuardInput ? INPUT_TYPE.password : INPUT_TYPE.text}
+				type={isGuardInput ? INPUT_TYPE.password : INPUT_TYPE.text}
 				{...inputProps}
 				onBlur={handleFocused}
 			/>
-			<span className={focused ?`${styles.errorMessage} ${styles.visibleError}` : styles.errorMessage}>{errorMessage}</span>
+			{!withoutErrorMessage && (
+				<span
+					className={
+						focused
+							? `${styles.errorMessage} ${styles.visibleError}`
+							: styles.errorMessage
+					}
+				>
+					{focused && errorMessage}
+				</span>
+			)}
 
 			{guarded && (
-				<LogoEye show={showGuardInput} onClick={handleToggleShowGuardInput} />
+				<LogoEye show={!isGuardInput} onClick={handleToggleShowGuardInput} />
 			)}
 			{clearByClick && (
 				<button className={styles.clearInput} onClick={onClearInput}>

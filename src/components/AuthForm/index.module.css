@@ -2,16 +2,16 @@
     width: 100%;
     display: flex;
     flex-direction: column;
-    row-gap: 20px;
+    row-gap: 10px;
     margin-top: 10px;
 }
 
 .submitBtn{
-    color: var(--black-color);
+    color: var(--additional-text-color);
 }
 
 .submitBtn:hover{
-    color: var(--white-color);
+    color: var(--main-text-color);
 }
 
 .signUpLink{

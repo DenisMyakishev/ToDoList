@@ -6,6 +6,7 @@ import { ModalContext } from '../../context/modal.context';
 import { AuthContext } from '../../context/auth.context';
 import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 import useValidation from '../../hooks/useValidation';
+import { INPUT_PATTERNS } from '../../constants/input';
 
 const RegForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -24,24 +25,16 @@ const RegForm = () => {
 
 	const inputs = [
 		{
-			name: 'email',
-			label: 'email',
-			placeholder: 'email',
+			...INPUT_PATTERNS.email,
 			errorMessage: errors.email,
 		},
 		{
-			name: 'password',
-			label: 'Password',
-			placeholder: 'password',
-			guarded: true,
+			...INPUT_PATTERNS.password,
 			errorMessage: errors.password,
 		},
 		{
-			name: 'confirmPassword',
-			label: 'ConfirmPassword',
-			placeholder: 'Confirm password',
+			...INPUT_PATTERNS.confirmPassword,
 			errorMessage: errors.confirmPassword,
-			guarded: true,
 		},
 	];
 
@@ -55,7 +48,6 @@ const RegForm = () => {
 			await signUp({ email: data.email, password: data.password });
 			handleCloseModal();
 		} else {
-			console.log(errors);
 			setForcedFocus(true);
 		}
 	};

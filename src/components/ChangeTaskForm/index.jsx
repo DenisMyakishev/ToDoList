@@ -6,6 +6,7 @@ import { ModalContext } from '../../context/modal.context';
 import { ToDoContext } from '../../context/todo.context';
 import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 import useValidation from '../../hooks/useValidation';
+import { INPUT_PATTERNS } from '../../constants/input';
 
 const ChangeTaskForm = ({ oldData }) => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -22,15 +23,11 @@ const ChangeTaskForm = ({ oldData }) => {
 
 	const inputs = [
 		{
-			name: 'title',
-			label: 'Title',
-			placeholder: 'title',
+			...INPUT_PATTERNS.title,
 			errorMessage: errors.title,
 		},
 		{
-			name: 'description',
-			label: 'Description',
-			placeholder: 'description',
+			...INPUT_PATTERNS.description,
 			errorMessage: errors.description,
 		},
 	];
@@ -43,19 +40,19 @@ const ChangeTaskForm = ({ oldData }) => {
 		e.preventDefault();
 		if (isValid) {
 			let newData = { id: oldData.id, ...data };
-			console.log(newData);
-			await updateTask('some');
-			setTasks((tasks) =>
-				tasks.map((t) =>
-					t.id === newData.id
-						? {
-								...newData,
-								nodeRef: createRef(null),
-								checked: oldData.checked,
-						  }
-						: t,
-				),
-			);
+			await updateTask(newData).then(() => {
+				setTasks((tasks) =>
+					tasks.map((t) =>
+						t.id === newData.id
+							? {
+									...newData,
+									nodeRef: createRef(null),
+									selected: oldData.selected,
+							  }
+							: t,
+					),
+				);
+			});
 			handleCloseModal();
 		} else {
 			setForcedFocus(true);
@@ -80,7 +77,7 @@ const ChangeTaskForm = ({ oldData }) => {
 				view={BUTTON_VIEW.outline}
 				onClick={handleSubmit}
 			>
-				Add new task
+				Change task
 			</Button>
 		</form>
 	);

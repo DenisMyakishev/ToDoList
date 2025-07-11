@@ -1,0 +1,18 @@
+.autoCloseBtn-btn {
+  margin-right: 0.5rem;
+}
+
+.autoCloseBtn-enter {
+  opacity: 0;
+}
+.autoCloseBtn-enter-active {
+  opacity: 1;
+  transition: opacity 1500ms ease-in;
+}
+.autoCloseBtn-exit {
+  opacity: 1;
+}
+.autoCloseBtn-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}

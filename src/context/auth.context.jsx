@@ -1,74 +1,68 @@
-import { createContext, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import {
 	createUserWithEmailAndPassword,
 	signInWithEmailAndPassword,
 	onAuthStateChanged,
 } from 'firebase/auth';
 import DataBase from '../API/dataBase';
-import Loader from '../components/Loader';
 import { SIGN_FORMS } from '../constants/signForms';
+import useAsyncFunc from '../hooks/useAsyncFunc';
+import Greeting from '../components/Greeting';
+import useModal from '../hooks/useModal';
 
 export const AuthContext = createContext(null);
 
 export function AuthContextProvider({ children }) {
 	const [user, setUser] = useState(null);
 	const [signForm, setSignForm] = useState(SIGN_FORMS.authentication);
-	const [isLoading, setIsLoading] = useState(false);
+	const [isOpen, handleOpenModal, handleCloseModal] = useModal(false);
 
-	const signUp = async ({ email, password }) => {
-		setIsLoading(true);
-		await createUserWithEmailAndPassword(DataBase.auth, email, password)
-			.then((userCredential) => {
-				const user = userCredential.user;
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-				console.log(errorMessage);
-			});
-		setIsLoading(false);
-	};
+	useEffect(() => {
+		checkAuth();
+	}, []);
 
-	const signIn = async ({ email, password }) => {
-		setIsLoading(true);
-		await signInWithEmailAndPassword(DataBase.auth, email, password)
-			.then((userCredential) => {
-				const user = userCredential.user;
-				setUser(user);
-				return user;
-			})
-			.catch((error) => {
-				const errorCode = error.code;
-				const errorMessage = error.message;
-				return errorMessage;
-			});
-		setIsLoading(false);
-	};
+	const signUp = useAsyncFunc(async ({ email, password }) => {
+		return await createUserWithEmailAndPassword(DataBase.auth, email, password).then(
+			(userCredential) => {
+				setUser(userCredential.user);
+			},
+		);
+	});
 
-	const signOut = async () => {
-		setIsLoading(true);
-		setUser(null);
-		await DataBase.auth.signOut();
-		setIsLoading(false);
-	};
+	const signIn = useAsyncFunc(async ({ email, password }) => {
+		return await signInWithEmailAndPassword(DataBase.auth, email, password).then(
+			(userCredential) => {
+				setUser(userCredential.user);
+			},
+		);
+	});
 
-	const checkAuth = async () => {
-		setIsLoading(true);
-		onAuthStateChanged(DataBase.auth, (user) => {
+	const signOut = useAsyncFunc(async () => {
+		return await DataBase.auth.signOut().then((res) => setUser(null));
+	});
+
+	const checkAuth = useAsyncFunc(async () => {
+		return onAuthStateChanged(DataBase.auth, (user) => {
 			if (user) {
 				setUser(user);
-			} else {
+				handleOpenModal();
 			}
 		});
-		setIsLoading(false);
-	};
+	});
+
 	return (
 		<AuthContext.Provider
-			value={{ user, signUp, signIn, signOut, checkAuth, signForm, setSignForm }}
+			value={{
+				user,
+				signUp,
+				signIn,
+				signOut,
+				signForm,
+				setSignForm,
+			}}
 		>
 			{children}
-
-			<Loader isLoading={isLoading} />
+			<Greeting isOpen={isOpen} handleCloseModal={handleCloseModal} />
 		</AuthContext.Provider>
 	);
 }

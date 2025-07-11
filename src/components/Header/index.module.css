@@ -1,12 +1,50 @@
 .header{
     width: 100%;
-    background-color: var(--black-color);
+    transition: all 0.7s;
 }
 
 .headerContainer{
-    display: flex;
-    align-items: center;
     justify-content: space-between;
+}
+
+.headerStart{
+  display: flex;
+  align-items: center;
+  column-gap: 20px;
+}
+
+.chengeTheme{
+  width: 50px;
+  height: 25px;
+  cursor: pointer;
+  justify-self: start;
+}
+
+.changeThemeWrapper{
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  background-color: var(--gray-color);
+  position: relative;
+}
+
+.point{
+  width: 25px;
+  height: 25px;
+  background-color: transparent;
+  border-radius: 50%;
+  position: absolute;
+  left: 0%;
+  box-shadow: -8px 0 0 1px rgb(255, 255, 255);
+  transform: translateX(20%);
+  transition: all 0.5s;
+}
+
+.light{
+  left: 100%;
+  background-color: yellow;
+  transform: translateX(-80%);
+  box-shadow: 0 0 0 1px yellow;
 }
 
 .modalTransition-enter {

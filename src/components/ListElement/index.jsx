@@ -5,25 +5,17 @@ import ChangeTaskForm from '../ChangeTaskForm';
 import { useContext, useState } from 'react';
 import { ToDoContext } from '../../context/todo.context';
 import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
+import useModal from '../../hooks/useModal';
 
 const ListElement = ({ element }) => {
-	const [isOpen, setIsOpen] = useState(false);
-	const [mutableRecord, setmMutableRecord] = useState('');
+	const [isOpen, handleOpemModal, handleCloseModal] = useModal(false);
+	const [mutableRecord, setMutableRecord] = useState('');
 	const { setTasks, removeTask } = useContext(ToDoContext);
 
-	const handleOpemModal = (oldData) => {
-		setmMutableRecord(oldData);
-		setIsOpen(true);
-	};
-
-	const handleCloseModal = () => {
-		setIsOpen(false);
-		setmMutableRecord('');
-	};
-
 	const handleRemoveElement = async (removeId) => {
-		setTasks((prev) => prev.filter((t) => t.id !== removeId));
-		await removeTask(removeId);
+		await removeTask(removeId).then(() => {
+			setTasks((prev) => prev.filter((t) => t.id !== removeId));
+		});
 	};
 
 	const toggleSelectElement = (e, element) => {
@@ -31,10 +23,10 @@ const ListElement = ({ element }) => {
 		setTasks((prev) =>
 			prev.map((p) => {
 				if (p.id === element.id) {
-					if (p.checked === true) {
-						return { ...p, checked: false };
+					if (p.selected === true) {
+						return { ...p, selected: false };
 					} else {
-						return { ...p, checked: true };
+						return { ...p, selected: true };
 					}
 				}
 				return p;
@@ -59,7 +51,11 @@ const ListElement = ({ element }) => {
 						<Button
 							color={BUTTON_COLORS.orange}
 							view={BUTTON_VIEW.outline}
-							onClick={() => handleOpemModal(element)}
+							onClick={() =>
+								handleOpemModal((element) => {
+									setMutableRecord(element);
+								}, element)
+							}
 						>
 							Change
 						</Button>
@@ -73,11 +69,17 @@ const ListElement = ({ element }) => {
 					</div>
 				</div>
 			</div>
-			{
-				<Modal isOpen={isOpen} handleCloseModal={handleCloseModal} title="Change">
-					<ChangeTaskForm oldData={mutableRecord} />
-				</Modal>
-			}
+			<Modal
+				isOpen={isOpen}
+				handleCloseModal={() =>
+					handleCloseModal(() => {
+						setMutableRecord('');
+					})
+				}
+				title="Change"
+			>
+				<ChangeTaskForm oldData={mutableRecord} />
+			</Modal>
 		</>
 	);
 };

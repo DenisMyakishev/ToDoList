@@ -1,4 +1,4 @@
-import { createRef, useContext, useState } from 'react';
+import { createRef, useContext, useEffect, useState } from 'react';
 import Input from '../Input';
 import styles from './index.module.css';
 import Button from '../Button';
@@ -7,6 +7,7 @@ import * as uuid from 'uuid';
 import { ToDoContext } from '../../context/todo.context';
 import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 import useValidation from '../../hooks/useValidation';
+import { INPUT_PATTERNS } from '../../constants/input';
 
 const AddTaskForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -23,17 +24,11 @@ const AddTaskForm = () => {
 
 	const inputs = [
 		{
-			name: 'title',
-			label: 'Title',
-			type: 'text',
-			placeholder: 'title',
+			...INPUT_PATTERNS.title,
 			errorMessage: errors.title,
 		},
 		{
-			name: 'description',
-			label: 'Description',
-			type: 'text',
-			placeholder: 'description',
+			...INPUT_PATTERNS.description,
 			errorMessage: errors.description,
 		},
 	];
@@ -44,11 +39,13 @@ const AddTaskForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
 		if (isValid) {
 			let newData = { id: uuid.v4(), ...data };
-			setTasks((tasks) => [{ ...newData, nodeRef: createRef(null) }, ...tasks]);
+			await addTask(newData).then(() => {
+				setTasks((tasks) => [{ ...newData, nodeRef: createRef(null) }, ...tasks]);
+			});
 			handleCloseModal();
-			await addTask(newData);
 		} else {
 			setForcedFocus(true);
 		}

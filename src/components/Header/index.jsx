@@ -2,33 +2,42 @@ import LogoTodo from '../../assets/LogoTodo';
 import Button from '../Button';
 import styles from './index.module.css';
 import Modal from '../Modal';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import AuthForm from '../AuthForm';
 import { AuthContext } from '../../context/auth.context';
 import RegForm from '../RegForm';
 import { SIGN_FORMS } from '../../constants/signForms';
 import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
+import useModal from '../../hooks/useModal';
+import { ThemeContext } from '../../context/theme.context';
 
 const Header = () => {
-	const [isOpen, setIsOpen] = useState(false);
-	const { user, checkAuth, signOut, signForm, setSignForm } = useContext(AuthContext);
+	const [isOpen, handleOpenModal, handleCloseModal] = useModal(false);
+	const { user, signOut, signForm, setSignForm } = useContext(AuthContext);
+	const { theme, setTheme } = useContext(ThemeContext);
+	const pointRef = useRef(null);
 
 	useEffect(() => {
-		checkAuth();
+		theme === 'dark' && pointRef.current.classList.add(`${styles.light}`);
 	}, []);
 
-	const handleOpenModal = () => {
-		setIsOpen(true);
-	};
-
-	const handleCloseModal = () => {
-		setIsOpen(false);
+	const changeTheme = (e) => {
+		setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+		pointRef.current.classList.toggle(`${styles.light}`);
 	};
 
 	return (
 		<header className={styles.header}>
 			<div className={`container ${styles.headerContainer}`}>
-				<LogoTodo />
+				<div className={styles.headerStart}>
+					<LogoTodo />
+					<div className={styles.chengeTheme} onClick={changeTheme}>
+						<div className={styles.changeThemeWrapper}>
+							<div className={styles.point} ref={pointRef}></div>
+						</div>
+					</div>
+				</div>
+
 				<nav>
 					<Button view={BUTTON_VIEW.outline}>ToDo List</Button>
 				</nav>
