@@ -7,12 +7,15 @@ import {
 import DataBase from '../API/dataBase';
 import { SIGN_FORMS } from '../constants/signForms';
 import useAsyncFunc from '../hooks/useAsyncFunc';
+import Greeting from '../components/Greeting';
+import useModal from '../hooks/useModal';
 
 export const AuthContext = createContext(null);
 
 export function AuthContextProvider({ children }) {
 	const [user, setUser] = useState(null);
 	const [signForm, setSignForm] = useState(SIGN_FORMS.authentication);
+	const [isOpen, handleOpenModal, handleCloseModal] = useModal(false);
 
 	useEffect(() => {
 		checkAuth();
@@ -42,6 +45,7 @@ export function AuthContextProvider({ children }) {
 		return onAuthStateChanged(DataBase.auth, (user) => {
 			if (user) {
 				setUser(user);
+				handleOpenModal();
 			}
 		});
 	});
@@ -58,6 +62,7 @@ export function AuthContextProvider({ children }) {
 			}}
 		>
 			{children}
+			<Greeting isOpen={isOpen} handleCloseModal={handleCloseModal} />
 		</AuthContext.Provider>
 	);
 }

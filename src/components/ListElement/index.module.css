@@ -34,3 +34,7 @@
     display: flex;
     column-gap: 10px;
 }
+
+.listElement button, .listElement span, .listElement p{
+    color: var(--white-color);
+}

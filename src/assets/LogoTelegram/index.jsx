@@ -4,7 +4,6 @@ const LogoTelegram = () => {
 	return (
 		<svg
 			className={styles.logoTelegram}
-			fill="#FFF"
 			width="800px"
 			height="800px"
 			viewBox="0 0 20 20"

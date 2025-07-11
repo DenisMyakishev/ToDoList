@@ -7,6 +7,7 @@ import { AuthContext } from '../../context/auth.context';
 import { SIGN_FORMS } from '../../constants/signForms';
 import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 import useValidation from '../../hooks/useValidation';
+import { INPUT_PATTERNS } from '../../constants/input';
 
 const AuthForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -24,16 +25,11 @@ const AuthForm = () => {
 
 	const inputs = [
 		{
-			name: 'email',
-			label: 'Email',
-			placeholder: 'Email',
+			...INPUT_PATTERNS.email,
 			errorMessage: errors.email,
 		},
 		{
-			name: 'password',
-			label: 'Password',
-			placeholder: 'Password',
-			guarded: true,
+			...INPUT_PATTERNS.password,
 			errorMessage: errors.password,
 		},
 	];

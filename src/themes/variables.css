@@ -26,8 +26,6 @@
     --white-color: rgb(255, 255, 255);
 
     /* pages variables */
-    --main-text-color: var(--white-color);
-    --additional-text-color: var(--black-color);
 
     /* font size */
     --font-size-xs: 10px;
@@ -36,5 +34,24 @@
     --font-size-l: 20px;
     --font-size-xl: 24px;
     --font-size-xxl: 28px;
+}
 
+body{
+    --main-theme-color: rgb(35, 35, 35);
+    --additional-theme-color: var(--white-color);
+
+    --main-background-color: var(--black-color);
+
+    --main-text-color: var(--white-color);
+    --additional-text-color: var(--black-color);
+}
+
+body.light{
+    --main-theme-color: var(--white-color);
+    --additional-theme-color: var(--black-color);
+
+    --main-background-color: var(--white-color);
+
+    --main-text-color: var(--black-color);
+    --additional-text-color: var(--white-color);
 }

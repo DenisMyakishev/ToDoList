@@ -24,11 +24,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
     z-index: 3;
-    color: var(--additional-text-color);
+    color: var(--main-text-color);
     min-width: 300px;
     border-radius: 10px;
-    background-color: var(--white-color);
+    background-color: var(--main-theme-color);
     overflow: hidden;
+    border: 2px solid var(--additional-theme-color);
 }
 
 .modalWindowWrapper{
@@ -37,7 +38,7 @@
     row-gap: 10px;
     flex-direction: column;
     align-items: center;
-    color: var(--black-color);
+    color: var(--main-text-color);
 }
 
 .modalFooter{
@@ -47,18 +48,17 @@
 .modalWindowWrapper button{
     background-size: 800px 80px !important;
     width: 100%;
-    color: var(--black-color);
+    color: var(--main-text-color);
 }
 
 .modalWindowWrapper button:hover{
     background-position: 400px 0px !important;
-    color: var(--white-color);
+    color: var(--main-text-color);
 }
 
 .closeByCross{
     display: flex;
     justify-content: center;
-    align-content: center;
     width: 30px;
     height: 30px;
     position: absolute;
@@ -67,34 +67,22 @@
     cursor: pointer;
 }
 
-.crossWrapper{
-    position: relative;
-    width: 100%;
-    height: 100%;
+.crossWrapper::after, .crossWrapper::before{
+    content: "";
+    position: absolute;
+    top: 0%;
+    left: 50%;
+    display: inline-block;
+    width: 3px;
+    height: 30px;
+    background-color: var(--main-text-color);
+    border-radius: 10px;
 }
 
 .crossWrapper::after{
-    content: "";
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    display: inline-block;
-    width: 3px;
-    height: 30px;
-    background-color: var(--black-color);
     transform: rotate(45deg);
-    border-radius: 10px;
 }
 
 .crossWrapper::before{
-    content: "";
-    display: inline-block;
-    position: absolute;
-    top: 0%;
-    left: 50%;
-    width: 3px;
-    height: 30px;
-    background-color: var(--black-color);
     transform: rotate(-45deg);
-    border-radius: 10px;
 }

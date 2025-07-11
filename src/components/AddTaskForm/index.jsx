@@ -7,6 +7,7 @@ import * as uuid from 'uuid';
 import { ToDoContext } from '../../context/todo.context';
 import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 import useValidation from '../../hooks/useValidation';
+import { INPUT_PATTERNS } from '../../constants/input';
 
 const AddTaskForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -23,15 +24,11 @@ const AddTaskForm = () => {
 
 	const inputs = [
 		{
-			name: 'title',
-			label: 'Title',
-			placeholder: 'Title',
+			...INPUT_PATTERNS.title,
 			errorMessage: errors.title,
 		},
 		{
-			name: 'description',
-			label: 'Description',
-			placeholder: 'Description',
+			...INPUT_PATTERNS.description,
 			errorMessage: errors.description,
 		},
 	];
@@ -42,6 +39,7 @@ const AddTaskForm = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+
 		if (isValid) {
 			let newData = { id: uuid.v4(), ...data };
 			await addTask(newData).then(() => {

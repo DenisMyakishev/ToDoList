@@ -50,7 +50,7 @@ const Input = ({
 							: styles.errorMessage
 					}
 				>
-					{errorMessage}
+					{focused && errorMessage}
 				</span>
 			)}
 

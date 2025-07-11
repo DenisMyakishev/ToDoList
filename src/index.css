@@ -7,10 +7,12 @@ html{
 
 body {
 	font-family: 'Roboto', sans-serif;
-	background-color: var(--black-color);
+	background-color: var(--main-theme-color);
 	color: var(--main-text-color);
 	height: 100vh;
 	max-height: 100vh;
+	transition: all 0.7s;
+	overflow: hidden;
 }
 
 #root{
@@ -47,4 +49,9 @@ main{
 	align-items: center;
 	margin: 0 auto;
 	padding: 5px;
+}
+
+svg{
+    fill: var(--main-text-color);
+    transition: all 0.5s;
 }

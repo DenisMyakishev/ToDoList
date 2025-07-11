@@ -2,7 +2,6 @@ import styles from './index.module.css';
 import { ToDoContextProvider } from '../../context/todo.context';
 import ToDoList from '../../components/ToDoList';
 import ToDoActions from '../../components/ToDoActions';
-import Message from '../../components/Message';
 
 const ToDo = () => {
 	return (

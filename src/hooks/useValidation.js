@@ -5,6 +5,15 @@ const useValidation = (values, validations) => {
 	const [isValid, setIsValid] = useState(false);
 	const [forcedFocus, setForcedFocus] = useState(false);
 
+	const setNewErrorMessage = (key, message) => {
+		setErrorMessages((prev) => {
+			return {
+				...prev,
+				[key]: message,
+			};
+		});
+	};
+
 	useEffect(() => {
 		setErrorMessages('');
 		for (const value in values) {
@@ -13,32 +22,23 @@ const useValidation = (values, validations) => {
 				switch (validation) {
 					case 'isEmpty':
 						if (!currentValue) {
-							setErrorMessages((prev) => {
-								return {
-									...prev,
-									[value]: "Input can't be empty",
-								};
-							});
+							setNewErrorMessage(value, "Input can't be empty");
 						}
 						break;
 					case 'minLength':
 						if (currentValue.length < validations[value][validation]) {
-							setErrorMessages((prev) => {
-								return {
-									...prev,
-									[value]: `The value cannot be shorter than ${validations[value][validation]} characters`,
-								};
-							});
+							setNewErrorMessage(
+								value,
+								`The value cannot be shorter than ${validations[value][validation]} characters`,
+							);
 						}
 						break;
 					case 'maxLength':
 						if (currentValue.length > validations[value][validation]) {
-							setErrorMessages((prev) => {
-								return {
-									...prev,
-									[value]: `The value cannot be longer than ${validations[value][validation]} characters`,
-								};
-							});
+							setNewErrorMessage(
+								value,
+								`The value cannot be longer than ${validations[value][validation]} characters`,
+							);
 						}
 						break;
 					case 'isMail':
@@ -46,12 +46,7 @@ const useValidation = (values, validations) => {
 							/^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/,
 						);
 						if (!reg.test(currentValue)) {
-							setErrorMessages((prev) => {
-								return {
-									...prev,
-									[value]: `Email is incorrect!`,
-								};
-							});
+							setNewErrorMessage(value, `Email is incorrect!`);
 						}
 						break;
 					case 'confirmPassword':
@@ -59,12 +54,7 @@ const useValidation = (values, validations) => {
 							currentValue !== validations[value][validation] ||
 							currentValue === ''
 						) {
-							setErrorMessages((prev) => {
-								return {
-									...prev,
-									[value]: `Passwords don't match!`,
-								};
-							});
+							setNewErrorMessage(value, `Passwords don't match!`);
 						}
 						break;
 				}
@@ -78,7 +68,7 @@ const useValidation = (values, validations) => {
 		} else {
 			setIsValid(false);
 		}
-	});
+	}, [errorMessages]);
 
 	return [errorMessages, isValid, forcedFocus, setForcedFocus];
 };

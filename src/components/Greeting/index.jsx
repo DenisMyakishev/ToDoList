@@ -1,5 +1,6 @@
 import LogoGreeting from '../../assets/LogoGreeting';
 import Message from '../Message';
+import useModal from '../../hooks/useModal';
 
 const Greeting = ({ isOpen, handleCloseModal }) => {
 	const title = 'Welcome!';

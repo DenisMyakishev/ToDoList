@@ -6,6 +6,7 @@ import { ModalContext } from '../../context/modal.context';
 import { AuthContext } from '../../context/auth.context';
 import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 import useValidation from '../../hooks/useValidation';
+import { INPUT_PATTERNS } from '../../constants/input';
 
 const RegForm = () => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -24,24 +25,16 @@ const RegForm = () => {
 
 	const inputs = [
 		{
-			name: 'email',
-			label: 'Email',
-			placeholder: 'Email',
+			...INPUT_PATTERNS.email,
 			errorMessage: errors.email,
 		},
 		{
-			name: 'password',
-			label: 'Password',
-			placeholder: 'Password',
+			...INPUT_PATTERNS.password,
 			errorMessage: errors.password,
-			guarded: true,
 		},
 		{
-			name: 'confirmPassword',
-			label: 'Confirm password',
-			placeholder: 'Confirm password',
+			...INPUT_PATTERNS.confirmPassword,
 			errorMessage: errors.confirmPassword,
-			guarded: true,
 		},
 	];
 

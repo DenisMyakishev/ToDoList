@@ -14,6 +14,7 @@ const Modal = ({
 	afterAnimation = () => {},
 	closeByCross = true,
 	withoutFooter = false,
+	...props
 }) => {
 	const nodeRef = useRef();
 	return (
@@ -26,7 +27,7 @@ const Modal = ({
 			onExited={afterAnimation}
 		>
 			<ModalContext.Provider value={{ handleCloseModal }}>
-				<div className={styles.modal} ref={nodeRef}>
+				<div className={`${styles.modal} ${props.className}`} ref={nodeRef}>
 					<div
 						className={styles.overlay}
 						onClick={() => handleCloseModal()}

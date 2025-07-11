@@ -1,5 +1,4 @@
 import { useContext } from 'react';
-import { AuthContext } from '../context/auth.context';
 import { LoaderContext } from '../context/loader.context';
 import { ErrorContext } from '../context/error.context';
 

@@ -6,7 +6,7 @@ import './transition.css';
 
 const Message = ({ title = '', message = '', isOpen, handleCloseModal, logo }) => {
 	return (
-		<Modal isOpen={isOpen} handleCloseModal={handleCloseModal} withoutFooter={true}>
+		<Modal className={styles.message} isOpen={isOpen} handleCloseModal={handleCloseModal} withoutFooter={true}>
 			<div className={styles.messageWrapper}>
 				<div className={styles.messageHeader}>
 					<div className={styles.title}>{title}</div>

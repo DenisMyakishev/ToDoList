@@ -7,9 +7,9 @@
 }
 
 .submitBtn{
-    color: var(--black-color);
+    color: var(--additional-text-color);
 }
 
 .submitBtn:hover{
-    color: var(--white-color);
+    color: var(--main-text-color);
 }

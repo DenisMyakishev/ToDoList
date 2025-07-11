@@ -6,6 +6,7 @@ import { ModalContext } from '../../context/modal.context';
 import { ToDoContext } from '../../context/todo.context';
 import { BUTTON_COLORS, BUTTON_TYPES, BUTTON_VIEW } from '../../constants/button';
 import useValidation from '../../hooks/useValidation';
+import { INPUT_PATTERNS } from '../../constants/input';
 
 const ChangeTaskForm = ({ oldData }) => {
 	const { handleCloseModal } = useContext(ModalContext);
@@ -22,15 +23,11 @@ const ChangeTaskForm = ({ oldData }) => {
 
 	const inputs = [
 		{
-			name: 'title',
-			label: 'Title',
-			placeholder: 'Title',
+			...INPUT_PATTERNS.title,
 			errorMessage: errors.title,
 		},
 		{
-			name: 'description',
-			label: 'Description',
-			placeholder: 'Description',
+			...INPUT_PATTERNS.description,
 			errorMessage: errors.description,
 		},
 	];

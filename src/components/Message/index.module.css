@@ -1,3 +1,7 @@
+.message{
+    z-index: 4;
+}
+
 .messageWrapper{
     display: flex;
     flex-direction: column;
