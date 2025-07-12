@@ -1,0 +1,47 @@
+.selectWrapper{
+    background-color: transparent;
+    position: relative;
+}
+
+.dropDownMenu{
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    transform: translateY( calc(100% + 10px) );
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--main-theme-color);
+    border-radius: 10px;
+    z-index: 2;
+    overflow: hidden;
+    max-height: 0px;
+    box-sizing: border-box;
+    transition: all 0.5s;
+    border: 2px solid var(--additional-theme-color);
+    opacity: 0;
+
+}
+
+.active{
+    opacity: 1;
+    max-height: 200px;
+}
+
+.dropDownOption{
+    padding: 10px 15px;
+    list-style-type: none;
+    transition: all 0.5s;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+}
+
+.dropDownOption:hover{
+    background-color: var(--purple-color);
+}
+
+.reversedOption{
+    background-color: var(--dark-purple-color);
+    color: var(--additional-text-color);
+}

@@ -70,13 +70,13 @@ const ListElement = ({ element }) => {
 				</div>
 			</div>
 			<Modal
+				title="Change"
 				isOpen={isOpen}
 				handleCloseModal={() =>
 					handleCloseModal(() => {
 						setMutableRecord('');
 					})
 				}
-				title="Change"
 			>
 				<ChangeTaskForm oldData={mutableRecord} />
 			</Modal>

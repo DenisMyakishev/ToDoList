@@ -1,9 +1,11 @@
 .list{
-    margin: 10px 0;
+    margin-top: 10px;
     width: 100%;
-    height: 90%;
+    min-height: 200px;
+    max-height: calc((100%-162px));
     max-width: 1000px;
     overflow-y: auto;
+    border-radius: 30px;
 }
 
 .listWrapper{
@@ -23,7 +25,7 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
-    font-size: 48px;
+    font-size: var(--font-size-xxxl);
     color: var(--orange-color);
 }
 

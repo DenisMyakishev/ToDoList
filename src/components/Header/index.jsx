@@ -66,6 +66,7 @@ const Header = () => {
 					{signForm === SIGN_FORMS.authentication ? <AuthForm /> : <RegForm />}
 				</Modal>
 			</div>
+			<hr className={styles.separator} />
 		</header>
 	);
 };

@@ -12,7 +12,6 @@ body {
 	height: 100vh;
 	max-height: 100vh;
 	transition: all 0.7s;
-	overflow: hidden;
 }
 
 #root{
@@ -40,7 +39,7 @@ input{
 }
 
 main{
-	height: calc(100vh - 114px);
+	height: calc(100vh - 119px);
 }
 
 .container{

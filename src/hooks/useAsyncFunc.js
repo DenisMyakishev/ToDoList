@@ -13,7 +13,7 @@ const useAsyncFunc = (callback, condition = true) => {
 			}
 		} catch (error) {
 			setError(error);
-			throw new Error(error);
+			throw error;
 		} finally {
 			setIsLoading(false);
 		}

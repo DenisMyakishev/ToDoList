@@ -2,13 +2,6 @@
     z-index: 4;
 }
 
-.messageWrapper{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-}
-
 .messageHeader{
     display: flex;
     flex-direction: column;
