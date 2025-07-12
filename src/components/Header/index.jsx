@@ -2,7 +2,7 @@ import LogoTodo from '../../assets/LogoTodo';
 import Button from '../Button';
 import styles from './index.module.css';
 import Modal from '../Modal';
-import { useContext, useEffect, useRef } from 'react';
+import {useContext, useEffect, useRef } from 'react';
 import AuthForm from '../AuthForm';
 import { AuthContext } from '../../context/auth.context';
 import RegForm from '../RegForm';
@@ -66,6 +66,7 @@ const Header = () => {
 					{signForm === SIGN_FORMS.authentication ? <AuthForm /> : <RegForm />}
 				</Modal>
 			</div>
+			<hr className={styles.separator} />
 		</header>
 	);
 };

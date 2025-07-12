@@ -1,6 +1,7 @@
-import { useContext, useState } from 'react';
+import {useContext, useState } from 'react';
 import Input from '../Input';
-import styles from './index.module.css';
+import styles from '../../main.module.css';
+import localStyles from './index.module.css';
 import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
 import { AuthContext } from '../../context/auth.context';
@@ -40,7 +41,9 @@ const AuthForm = () => {
 	};
 
 	const handleChange = (e) => {
-		setData({ ...data, [e.target.name]: e.target.value });
+		setData((prev) => {
+			return { ...prev, [e.target.name]: e.target.value };
+		});
 	};
 
 	const handleSubmit = async (e) => {
@@ -54,7 +57,7 @@ const AuthForm = () => {
 	};
 
 	return (
-		<form className={styles.addTaskForm}>
+		<form className={styles.modalForm}>
 			{inputs.map((input) => (
 				<Input
 					key={input.name}
@@ -64,7 +67,7 @@ const AuthForm = () => {
 					forcedFocus={forcedFocus}
 				/>
 			))}
-			<a href="" onClick={handleChangeSignForm} className={styles.signUpLink}>
+			<a href="" onClick={handleChangeSignForm} className={localStyles.signUpLink}>
 				Sign Up
 			</a>
 			<Button

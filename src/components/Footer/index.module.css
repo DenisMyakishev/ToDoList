@@ -11,3 +11,8 @@
     align-items: center;
     column-gap: 10px;
 }
+
+.separator{
+    border: 2px solid var(--gray-color);
+    height: 2px;
+}

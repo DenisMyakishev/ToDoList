@@ -1,21 +1,8 @@
-import { useContext, useEffect, useState } from 'react';
-import { ToDoContext } from '../../context/todo.context';
 import List from '../List';
+import useSearchSortQuery from '../../hooks/useSearchSortQuery';
 
 const ToDoList = () => {
-	const { tasks, searchQuery } = useContext(ToDoContext);
-	const [searchedTasks, setSearchedTasks] = useState([]);
-
-	useEffect(() => {
-		setSearchedTasks(
-			tasks.filter(
-				(t) =>
-					(t?.title.includes(searchQuery) ||
-						t?.description.includes(searchQuery)) &&
-					t,
-			),
-		);
-	}, [tasks, searchQuery]);
+	const [searchedTasks] = useSearchSortQuery();
 
 	return <List elements={searchedTasks} />;
 };

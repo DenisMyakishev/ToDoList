@@ -4,6 +4,7 @@ import styles from './index.module.css';
 const Footer = () => {
 	return (
 		<footer>
+			<hr className={styles.separator}/>
 			<div className={`container ${styles.footerContainer}`}>
 				<span>Created by:</span>
 				<div className={styles.links}>

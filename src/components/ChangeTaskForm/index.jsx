@@ -1,6 +1,6 @@
 import { createRef, useContext, useState } from 'react';
 import Input from '../Input';
-import styles from './index.module.css';
+import styles from '../../main.module.css';
 import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
 import { ToDoContext } from '../../context/todo.context';
@@ -39,15 +39,14 @@ const ChangeTaskForm = ({ oldData }) => {
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (isValid) {
-			let newData = { id: oldData.id, ...data };
+			let newData = { id: oldData.id, creationDate: new Date().valueOf(), ...data };
 			await updateTask(newData).then(() => {
 				setTasks((tasks) =>
 					tasks.map((t) =>
 						t.id === newData.id
 							? {
+									...oldData,
 									...newData,
-									nodeRef: createRef(null),
-									selected: oldData.selected,
 							  }
 							: t,
 					),
@@ -60,7 +59,7 @@ const ChangeTaskForm = ({ oldData }) => {
 	};
 
 	return (
-		<form className={styles.changeTaskForm}>
+		<form className={styles.modalForm}>
 			{inputs.map((input) => (
 				<Input
 					key={input.name}

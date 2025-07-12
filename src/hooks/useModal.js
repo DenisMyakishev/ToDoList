@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 const useModal = (init = false) => {
 	const [isOpen, setIsOpen] = useState(init);
-
 	const handleOpenModal = (callback = () => {}, ...args) => {
 		if (typeof callback === 'function') callback(...args);
 		setIsOpen(true);

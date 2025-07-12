@@ -2,7 +2,7 @@ import styles from './index.module.css';
 import Button from '../Button';
 import Modal from '../Modal';
 import ChangeTaskForm from '../ChangeTaskForm';
-import { useContext, useState } from 'react';
+import { memo, useContext, useState } from 'react';
 import { ToDoContext } from '../../context/todo.context';
 import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
 import useModal from '../../hooks/useModal';
@@ -70,13 +70,13 @@ const ListElement = ({ element }) => {
 				</div>
 			</div>
 			<Modal
+				title="Change"
 				isOpen={isOpen}
 				handleCloseModal={() =>
 					handleCloseModal(() => {
 						setMutableRecord('');
 					})
 				}
-				title="Change"
 			>
 				<ChangeTaskForm oldData={mutableRecord} />
 			</Modal>
@@ -84,4 +84,4 @@ const ListElement = ({ element }) => {
 	);
 };
 
-export default ListElement;
+export default memo(ListElement);

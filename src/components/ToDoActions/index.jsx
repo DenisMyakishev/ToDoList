@@ -7,6 +7,7 @@ import AddTaskForm from '../AddTaskForm';
 import { ToDoContext } from '../../context/todo.context';
 import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
 import useModal from '../../hooks/useModal';
+import DropDownMenu from '../DropDownMenu';
 
 const ToDoActions = () => {
 	const { setSearchQuery, searchQuery, removeSelectedTasks, setTasks, tasks } =
@@ -14,7 +15,7 @@ const ToDoActions = () => {
 	const [isOpen, handleOpenModal, handleCloseModal] = useModal(false);
 
 	const handleRemoveSelected = async () => {
-		await removeSelectedTasks(tasks).then((res) =>
+		await removeSelectedTasks(tasks).then(() =>
 			setTasks(tasks.filter((t) => !t.selected && t)),
 		);
 	};
@@ -40,14 +41,13 @@ const ToDoActions = () => {
 				>
 					Remove selected
 				</Button>
+				<DropDownMenu />
 				<Input
 					name="query"
-					value={searchQuery}
 					placeholder="Search"
+					value={searchQuery}
 					clearByClick
-					onClearInput={() => setSearchQuery('')}
 					onChange={handleChange}
-					withoutErrorMessage={true}
 				/>
 			</div>
 			<Modal isOpen={isOpen} handleCloseModal={handleCloseModal} title="Add">

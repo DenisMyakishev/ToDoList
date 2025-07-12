@@ -11,13 +11,18 @@ import {
 } from 'firebase/firestore';
 import { AuthContext } from './auth.context';
 import useAsyncFunc from '../hooks/useAsyncFunc';
+import { SORT_OPTIONS } from '../constants/sortOptions';
 
 export const ToDoContext = createContext(null);
 
 export function ToDoContextProvider({ children, ...props }) {
-	const [tasks, setTasks] = useState([]);
 	const { user } = useContext(AuthContext);
+	const [tasks, setTasks] = useState([]);
 	const [searchQuery, setSearchQuery] = useState('');
+	const [sortQuery, setSortQuery] = useState({
+		value: SORT_OPTIONS.creationDate.value,
+		isReversed: false,
+	});
 	const db = getFirestore(DataBase.app);
 	const condition = user !== null;
 
@@ -40,8 +45,8 @@ export function ToDoContextProvider({ children, ...props }) {
 
 	const removeSelectedTasks = useAsyncFunc(async (tasks) => {
 		for (let i = 0; i < tasks.length; i++) {
-			if (tasks[i].checked === true) {
-				return await removeTask(tasks[i].id);
+			if (tasks[i].selected === true) {
+				await removeTask(tasks[i].id);
 			}
 		}
 	}, condition);
@@ -71,6 +76,8 @@ export function ToDoContextProvider({ children, ...props }) {
 				updateTask,
 				searchQuery,
 				setSearchQuery,
+				sortQuery,
+				setSortQuery,
 				...props,
 			}}
 		>

@@ -1,6 +1,6 @@
-import { createRef, useContext, useEffect, useState } from 'react';
+import { createRef, memo, useContext, useState } from 'react';
 import Input from '../Input';
-import styles from './index.module.css';
+import styles from '../../main.module.css';
 import Button from '../Button';
 import { ModalContext } from '../../context/modal.context';
 import * as uuid from 'uuid';
@@ -34,14 +34,19 @@ const AddTaskForm = () => {
 	];
 
 	const onChange = (e) => {
-		setData({ ...data, [e.target.name]: e.target.value });
+		setData((prev) => {
+			return { ...prev, [e.target.name]: e.target.value };
+		});
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
 		if (isValid) {
-			let newData = { id: uuid.v4(), ...data };
+			let newData = {
+				id: uuid.v4(),
+				creationDate: new Date().valueOf(),
+				...data,
+			};
 			await addTask(newData).then(() => {
 				setTasks((tasks) => [{ ...newData, nodeRef: createRef(null) }, ...tasks]);
 			});
@@ -52,7 +57,7 @@ const AddTaskForm = () => {
 	};
 
 	return (
-		<form className={styles.addTaskForm}>
+		<form className={styles.modalForm}>
 			{inputs.map((input) => (
 				<Input
 					key={input.name}
@@ -75,4 +80,4 @@ const AddTaskForm = () => {
 	);
 };
 
-export default AddTaskForm;
+export default memo(AddTaskForm);
