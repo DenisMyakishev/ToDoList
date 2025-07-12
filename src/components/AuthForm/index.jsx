@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import {useContext, useState } from 'react';
 import Input from '../Input';
 import styles from '../../main.module.css';
 import localStyles from './index.module.css';
@@ -41,7 +41,9 @@ const AuthForm = () => {
 	};
 
 	const handleChange = (e) => {
-		setData({ ...data, [e.target.name]: e.target.value });
+		setData((prev) => {
+			return { ...prev, [e.target.name]: e.target.value };
+		});
 	};
 
 	const handleSubmit = async (e) => {

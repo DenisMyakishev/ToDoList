@@ -1,4 +1,4 @@
-import { createRef, useContext, useState } from 'react';
+import { createRef, memo, useContext, useState } from 'react';
 import Input from '../Input';
 import styles from '../../main.module.css';
 import Button from '../Button';
@@ -34,13 +34,19 @@ const AddTaskForm = () => {
 	];
 
 	const onChange = (e) => {
-		setData({ ...data, [e.target.name]: e.target.value });
+		setData((prev) => {
+			return { ...prev, [e.target.name]: e.target.value };
+		});
 	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		if (isValid) {
-			let newData = { id: uuid.v4(), creationDate: new Date().valueOf(), ...data };
+			let newData = {
+				id: uuid.v4(),
+				creationDate: new Date().valueOf(),
+				...data,
+			};
 			await addTask(newData).then(() => {
 				setTasks((tasks) => [{ ...newData, nodeRef: createRef(null) }, ...tasks]);
 			});
@@ -74,4 +80,4 @@ const AddTaskForm = () => {
 	);
 };
 
-export default AddTaskForm;
+export default memo(AddTaskForm);

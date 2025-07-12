@@ -2,27 +2,24 @@ import { CSSTransition } from 'react-transition-group';
 import { ModalContext } from '../../context/modal.context';
 import styles from './index.module.css';
 import './transition.css';
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 import Button from '../Button/index';
 import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
 
 const Modal = ({ isOpen, handleCloseModal, title, children, ...props }) => {
 	const nodeRef = useRef();
 	return (
-		<CSSTransition
-			in={isOpen}
-			nodeRef={nodeRef}
-			timeout={500}
-			classNames="modal"
-			unmountOnExit
-			onExited={props.afterAnimation}
-		>
-			<ModalContext.Provider value={{ handleCloseModal }}>
+		<ModalContext.Provider value={{ handleCloseModal }}>
+			<CSSTransition
+				in={isOpen}
+				nodeRef={nodeRef}
+				timeout={500}
+				classNames="modal"
+				unmountOnExit
+				onExited={props.afterAnimation}
+			>
 				<div className={`${styles.modal} ${props.className}`} ref={nodeRef}>
-					<div
-						className={styles.overlay}
-						onClick={() => handleCloseModal()}
-					></div>
+					<div className={styles.overlay} onClick={handleCloseModal}></div>
 					<div className={styles.modalWindow}>
 						<div className={styles.modalWindowWrapper}>
 							<h3 className={styles.title}>{title}</h3>
@@ -39,16 +36,16 @@ const Modal = ({ isOpen, handleCloseModal, title, children, ...props }) => {
 							</div>
 							<div
 								className={styles.closeByCross}
-								onClick={() => handleCloseModal()}
+								onClick={handleCloseModal}
 							>
 								<div className={styles.crossWrapper}></div>
 							</div>
 						</div>
 					</div>
 				</div>
-			</ModalContext.Provider>
-		</CSSTransition>
+			</CSSTransition>
+		</ModalContext.Provider>
 	);
 };
 
-export default Modal;
+export default memo(Modal);

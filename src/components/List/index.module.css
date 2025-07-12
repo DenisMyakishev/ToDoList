@@ -2,7 +2,7 @@
     margin-top: 10px;
     width: 100%;
     min-height: 200px;
-    max-height: calc((100%-162px));
+    max-height: calc(100% - 162px);
     max-width: 1000px;
     overflow-y: auto;
     border-radius: 30px;

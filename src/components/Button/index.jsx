@@ -1,3 +1,4 @@
+import { memo, useMemo, useState } from 'react';
 import { BUTTON_DISPLAYCLASSES, BUTTON_TYPES } from '../../constants/button';
 import styles from './index.module.css';
 
@@ -33,4 +34,4 @@ const Button = ({
 	);
 };
 
-export default Button;
+export default memo(Button);

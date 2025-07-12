@@ -1,4 +1,4 @@
-import { useContext, useRef } from 'react';
+import { memo, useContext, useRef } from 'react';
 import styles from './index.module.css';
 import { ToDoContext } from '../../context/todo.context';
 import Button from '../Button';
@@ -64,4 +64,4 @@ const DropDownMenu = () => {
 	);
 };
 
-export default DropDownMenu;
+export default memo(DropDownMenu);

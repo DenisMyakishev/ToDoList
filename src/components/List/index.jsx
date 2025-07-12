@@ -2,6 +2,7 @@ import styles from './index.module.css';
 import './transition.css';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import ListElement from '../ListElement';
+import { memo } from 'react';
 
 const List = ({ elements = [] }) => {
 	return (
@@ -28,4 +29,4 @@ const List = ({ elements = [] }) => {
 	);
 };
 
-export default List;
+export default memo(List);

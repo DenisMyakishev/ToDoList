@@ -1,6 +1,7 @@
+import { memo } from 'react';
 import styles from './index.module.css';
 
-export const LogoEye = ({ show, onClick }) => {
+const LogoEye = ({ show, onClick }) => {
 	return (
 		<div className={styles.eye} onClick={onClick}>
 			<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,3 +42,5 @@ export const LogoEye = ({ show, onClick }) => {
 		</div>
 	);
 };
+
+export default memo(LogoEye);

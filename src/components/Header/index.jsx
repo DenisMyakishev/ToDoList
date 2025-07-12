@@ -2,7 +2,7 @@ import LogoTodo from '../../assets/LogoTodo';
 import Button from '../Button';
 import styles from './index.module.css';
 import Modal from '../Modal';
-import { useContext, useEffect, useRef } from 'react';
+import {useContext, useEffect, useRef } from 'react';
 import AuthForm from '../AuthForm';
 import { AuthContext } from '../../context/auth.context';
 import RegForm from '../RegForm';

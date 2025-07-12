@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { LogoEye } from '../../assets/LogoEye';
+import { useEffect, useRef, useState, memo } from 'react';
+import LogoEye from '../../assets/LogoEye';
 import { INPUT_TYPE } from '../../constants/input';
 import styles from './index.module.css';
 
@@ -69,4 +69,4 @@ const Input = ({
 	);
 };
 
-export default Input;
+export default memo(Input);
