@@ -4,7 +4,7 @@ import {
 	signInWithEmailAndPassword,
 	onAuthStateChanged,
 } from 'firebase/auth';
-import DataBase from '../API/dataBase';
+import DataBase from '../API/firebase';
 import { SIGN_FORMS } from '../constants/signForms';
 import useAsyncFunc from '../hooks/useAsyncFunc';
 import useModal from '../hooks/useModal';
