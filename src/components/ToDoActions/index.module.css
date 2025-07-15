@@ -2,4 +2,15 @@
     display: flex;
     align-items: center;
     column-gap: 10px;
+    flex-wrap: wrap;
+    row-gap: 10px;
+    justify-content: center;
+}
+
+@media (max-width: 768px) {
+    .actions > *{
+        flex-direction: column;
+        max-width: 300px;
+        min-width: 200px;
+    }
 }

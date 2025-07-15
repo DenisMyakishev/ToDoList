@@ -1,5 +1,6 @@
 import List from '../List';
 import useSearchSortQuery from '../../hooks/useSearchSortQuery';
+import { memo } from 'react';
 
 const ToDoList = () => {
 	const [searchedTasks] = useSearchSortQuery();
@@ -7,4 +8,4 @@ const ToDoList = () => {
 	return <List elements={searchedTasks} />;
 };
 
-export default ToDoList;
+export default memo(ToDoList);

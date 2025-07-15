@@ -1,4 +1,4 @@
-import { memo, useContext, useRef } from 'react';
+import { memo, useCallback, useContext, useRef } from 'react';
 import styles from './index.module.css';
 import { ToDoContext } from '../../context/todo.context';
 import Button from '../Button';
@@ -9,23 +9,23 @@ const DropDownMenu = () => {
 	const { sortQuery, setSortQuery } = useContext(ToDoContext);
 	const menuRef = useRef();
 
-	const handeReverse = () => {
+	const handeReverse = useCallback(() => {
 		setSortQuery((prev) => {
 			return { ...prev, isReversed: !prev.isReversed };
 		});
 		menuRef.current.classList.remove(`${styles.active}`);
-	};
+	}, []);
 
-	const handleChooseOption = (e) => {
+	const handleChooseOption = useCallback((e) => {
 		setSortQuery((prev) => {
 			return { ...prev, value: e.target.getAttribute('value') };
 		});
 		menuRef.current.classList.remove(`${styles.active}`);
-	};
+	}, []);
 
-	const handleToggleMenu = () => {
+	const handleToggleMenu = useCallback(() => {
 		menuRef.current.classList.toggle(`${styles.active}`);
-	};
+	}, []);
 
 	return (
 		<div className={styles.selectWrapper}>
@@ -42,7 +42,7 @@ const DropDownMenu = () => {
 						key={option.value}
 						className={styles.dropDownOption}
 						value={option.value}
-						onClick={(e) => handleChooseOption(e)}
+						onClick={handleChooseOption}
 					>
 						{option.text}
 					</li>

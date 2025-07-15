@@ -1,14 +1,12 @@
 import { createContext, useEffect, useState } from 'react';
-import Message from '../components/Message';
-import LogoError from '../assets/LogoError';
-import Modal from '../components/Modal';
+import ErrorMessageModal from '../components/ErrorMessageModal';
 
 export const ErrorContext = createContext([false, '']);
 
 const ErrorContextProvider = ({ children }) => {
 	const [isErrorFallbackOpen, setIsErrorFallbackOpen] = useState(false);
 	const [error, setError] = useState('');
-	const [processedError, setProcessedError] = useState(error);
+	const [processedError, setProcessedError] = useState('');
 
 	const processError = (error) => {
 		switch (error.name) {
@@ -59,16 +57,13 @@ const ErrorContextProvider = ({ children }) => {
 	}, [error]);
 
 	return (
-		<ErrorContext.Provider value={{ error, setError }}>
+		<ErrorContext.Provider value={{ error, setError, processedError }}>
 			{children}
-			<Message
-				title="Error"
-				message={processedError.message}
+			<ErrorMessageModal
 				isOpen={isErrorFallbackOpen}
 				handleCloseModal={() => setIsErrorFallbackOpen(false)}
-				logo={<LogoError />}
 				afterAnimation={() => setError('')}
-			></Message>
+			/>
 		</ErrorContext.Provider>
 	);
 };
