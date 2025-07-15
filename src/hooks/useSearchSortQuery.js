@@ -13,10 +13,8 @@ const useSearchSortQuery = () => {
 					t?.description.includes(searchQuery)) &&
 				t,
 		);
-		const sortedAndSearchedResult = SORT_OPTIONS[sortQuery.value]?.sortMethod(
-			searchResult,
-			SORT_OPTIONS[sortQuery.value].value,
-		);
+		const sortMethod = SORT_OPTIONS[sortQuery.value]?.sortMethod;
+		const sortedAndSearchedResult = sortMethod(searchResult, sortQuery.value);
 		setSearchedElements(
 			sortQuery.isReversed
 				? sortedAndSearchedResult.reverse()

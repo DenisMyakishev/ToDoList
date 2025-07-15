@@ -1,8 +1,7 @@
-import { useContext } from 'react';
+import { memo, useCallback, useContext } from 'react';
 import Button from '../Button';
 import Input from '../Input';
 import styles from './index.module.css';
-import Modal from '../Modal';
 import AddTaskForm from '../AddTaskForm';
 import { ToDoContext } from '../../context/todo.context';
 import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
@@ -14,15 +13,15 @@ const ToDoActions = () => {
 		useContext(ToDoContext);
 	const [isOpen, handleOpenModal, handleCloseModal] = useModal(false);
 
-	const handleRemoveSelected = async () => {
-		await removeSelectedTasks(tasks).then(() =>
-			setTasks(tasks.filter((t) => !t.selected && t)),
-		);
-	};
+	const handleRemoveSelected = useCallback(async () => {
+		await removeSelectedTasks(tasks).then(() => {
+			setTasks((prev) => prev.filter((t) => !t.selected && t));
+		});
+	}, [tasks]);
 
-	const handleChange = (e) => {
+	const handleChange = useCallback((e) => {
 		setSearchQuery(e.target.value);
-	};
+	}, []);
 
 	return (
 		<>
@@ -50,11 +49,9 @@ const ToDoActions = () => {
 					onChange={handleChange}
 				/>
 			</div>
-			<Modal isOpen={isOpen} handleCloseModal={handleCloseModal} title="Add">
-				<AddTaskForm />
-			</Modal>
+			<AddTaskForm isOpen={isOpen} handleCloseModal={handleCloseModal} />
 		</>
 	);
 };
 
-export default ToDoActions;
+export default memo(ToDoActions);

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, memo } from 'react';
+import { useEffect, useRef, useState, memo, useCallback } from 'react';
 import LogoEye from '../../assets/LogoEye';
 import { INPUT_TYPE } from '../../constants/input';
 import styles from './index.module.css';
@@ -20,18 +20,18 @@ const Input = ({
 		forcedFocus && setFocused(true);
 	}, [forcedFocus]);
 
-	const handleToggleShowGuardInput = () => {
+	const handleToggleShowGuardInput = useCallback(() => {
 		setIsGuardInput((prev) => !prev);
-	};
+	}, []);
 
-	const handleClearByClick = () => {
+	const handleClearByClick = useCallback(() => {
 		const clearValue = { target: { value: '' } };
 		inputProps.onChange(clearValue);
-	};
+	}, [inputProps.onChange]);
 
-	const handleFocused = () => {
+	const handleFocused = useCallback(() => {
 		setFocused(true);
-	};
+	}, []);
 
 	return (
 		<div className={styles.inputContainer}>

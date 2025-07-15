@@ -1,21 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 const useValidation = (values, validations) => {
-	const [errorMessages, setErrorMessages] = useState({});
+	const [validationErrorMessages, setValidationErrorMessages] = useState({});
 	const [isValid, setIsValid] = useState(false);
 	const [forcedFocus, setForcedFocus] = useState(false);
 
-	const setNewErrorMessage = (key, message) => {
-		setErrorMessages((prev) => {
+	const setNewErrorMessage = useCallback((key, message) => {
+		setValidationErrorMessages((prev) => {
 			return {
 				...prev,
 				[key]: message,
 			};
 		});
-	};
+	}, []);
 
 	useEffect(() => {
-		setErrorMessages('');
+		setValidationErrorMessages('');
 		for (const value in values) {
 			const currentValue = values[value];
 			for (const validation in validations[value]) {
@@ -63,14 +63,14 @@ const useValidation = (values, validations) => {
 	}, [values]);
 
 	useEffect(() => {
-		if (errorMessages === '') {
+		if (validationErrorMessages === '') {
 			setIsValid(true);
 		} else {
 			setIsValid(false);
 		}
-	}, [errorMessages]);
+	}, [validationErrorMessages]);
 
-	return [errorMessages, isValid, forcedFocus, setForcedFocus];
+	return [validationErrorMessages, isValid, forcedFocus, setForcedFocus];
 };
 
 export default useValidation;

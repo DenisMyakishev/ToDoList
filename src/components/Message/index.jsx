@@ -1,8 +1,6 @@
-import { BUTTON_COLORS, BUTTON_VIEW } from '../../constants/button';
 import Modal from '../Modal/index';
 import styles from '../../main.module.css';
 import localStyles from './index.module.css';
-import Button from '../Button';
 import './transition.css';
 
 const Message = ({ title = '', message = '', isOpen, handleCloseModal, logo }) => {

@@ -8,8 +8,7 @@ import DataBase from '../API/dataBase';
 import { SIGN_FORMS } from '../constants/signForms';
 import useAsyncFunc from '../hooks/useAsyncFunc';
 import useModal from '../hooks/useModal';
-import Message from '../components/Message';
-import LogoGreeting from '../assets/LogoGreeting';
+import Greeting from '../components/Greeting';
 
 export const AuthContext = createContext(null);
 
@@ -63,13 +62,7 @@ export function AuthContextProvider({ children }) {
 			}}
 		>
 			{children}
-			<Message
-				isOpen={isOpen}
-				handleCloseModal={handleCloseModal}
-				title="Welcome!"
-				message="Nice to see you. Have a nice day!"
-				logo={<LogoGreeting />}
-			></Message>
+			<Greeting isOpen={isOpen} handleCloseModal={handleCloseModal}></Greeting>
 		</AuthContext.Provider>
 	);
 }
