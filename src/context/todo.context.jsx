@@ -1,5 +1,5 @@
 import { createContext, createRef, useContext, useEffect, useState } from 'react';
-import DataBase from '../API/dataBase';
+import DataBase from '../API/firebase';
 import {
 	collection,
 	getFirestore,
